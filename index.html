@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOX:VERSE - Step 1: Color Selection</title>
+    <title>NOX:VERSE</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <svg class="logo" viewBox="0 0 69.38 32.02" xmlns="http://www.w3.org/2000/svg">
+        <svg class="logo" viewBox="-350 -425 1100 900" xmlns="http://www.w3.org/2000/svg">
             <defs>
                 
                 <!-- Main fill gradient - used for text and shapes -->
@@ -30,10 +30,55 @@
                     <stop offset="0%" stop-color="#a8b8ff" stop-opacity="0.6"/>
                     <stop offset="100%" stop-color="#4a5a9f" stop-opacity="0.3"/>
                 </radialGradient>
+                
+                <!-- Glow filter for orbit particle -->
+                <filter id="orbitGlow" x="-100%" y="-100%" width="300%" height="300%">
+                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                    <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+                
+                <!-- Gradient for shooting star trail - stardust effect with color gradient -->
+                <linearGradient id="shootingStarGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#ff00ff" stop-opacity="0"/>
+                    <stop offset="10%" stop-color="#ff00ff" stop-opacity="0.3"/>
+                    <stop offset="30%" stop-color="#ff00ff" stop-opacity="0.6"/>
+                    <stop offset="50%" stop-color="#a8b8ff" stop-opacity="0.7"/>
+                    <stop offset="70%" stop-color="#6b7db8" stop-opacity="0.8"/>
+                    <stop offset="85%" stop-color="#4a5a9f" stop-opacity="0.9"/>
+                    <stop offset="100%" stop-color="#ffffff" stop-opacity="1"/>
+                </linearGradient>
+                
+                <!-- Enhanced glow filter for stardust trail -->
+                <filter id="stardustGlow" x="-100%" y="-100%" width="300%" height="300%">
+                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                    <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+                
+                <!-- Smoky blur filter for glitter smoke effect -->
+                <filter id="smokeGlow" x="-300%" y="-300%" width="700%" height="700%">
+                    <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                    <feGaussianBlur stdDeviation="2" in="SourceGraphic" result="softBlur"/>
+                    <feMerge>
+                        <feMergeNode in="coloredBlur" opacity="0.6"/>
+                        <feMergeNode in="softBlur" opacity="0.8"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
             </defs>
             
-            <!-- Main logo wrapper group -->
-            <g id="logo-noxverse">
+            <!-- Orbit particle container (dynamically populated) -->
+            <g id="orbit-container"></g>
+            
+            <!-- Main logo wrapper group - scaled to original size -->
+            <!-- Scale 15.87x to match viewBox size increase (1100/69.38 ≈ 15.87) -->
+            <!-- ViewBox center is at (200, 25) for width 1100, so logo center should be at (200, 25) -->
+            <g id="logo-noxverse" transform="translate(200, 25) scale(15.87) translate(-34.69, -16.01)">
                 <!-- Eclipse ring (the "O") - combines left and right eclipses -->
                 <g id="logo-ring">
                     <path class="cls-1" d="M23.99,11.42c0-5.34,3.99-9.74,9.16-10.4-.44-.06-.89-.1-1.34-.1-5.8,0-10.5,4.7-10.5,10.5s4.7,10.5,10.5,10.5c.46,0,.9-.04,1.34-.1-5.16-.66-9.16-5.06-9.16-10.4Z" fill="url(#eclipseGradient)"/>
@@ -64,5 +109,11 @@
             </g>
         </svg>
     </div>
+    
+    <!-- GSAP Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    
+    <!-- Orbit Animation Script -->
+    <script src="orbit-animation.js"></script>
 </body>
 </html>

@@ -84,6 +84,25 @@ body {
 }
 
 /* ----------------------------------------------------------------------------
+   Orbit Particle Styles
+   ---------------------------------------------------------------------------- */
+
+.orbit-particle-group {
+    pointer-events: none;
+    will-change: transform;
+}
+
+.orbit-particle {
+    pointer-events: none;
+    will-change: opacity;
+}
+
+.orbit-trail {
+    pointer-events: none;
+    will-change: x2, y2, opacity;
+}
+
+/* ----------------------------------------------------------------------------
    SVG Styles
    ---------------------------------------------------------------------------- */
 
@@ -96,6 +115,16 @@ body {
     stroke: url(#mainFill);
     stroke-miterlimit: 10;
     stroke-width: 0.25px;
+}
+
+/* Star clickable and hover effect */
+#logo-star {
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+#logo-star:hover {
+    opacity: 0.9;
 }
 
 /* SVG Gradient Stop Colors - Controlled via CSS */
