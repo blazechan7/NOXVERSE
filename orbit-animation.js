@@ -10,7 +10,7 @@
         radius: 420,
         
         // Particle appearance
-        starSize: 50,
+        starSize: 70,
         particleColor: '#ffffff',
         particleOpacity: 1,
         
@@ -175,11 +175,25 @@
         const trail = group.trail;
         const duration = ORBIT_CONFIG.duration;
         const fadeStart = duration - ORBIT_CONFIG.fadeOutDuration;
+        
+        // Get eclipse elements for rotation
+        const eclipseLeft = document.getElementById('eclipse-left');
+        const eclipseRight = document.getElementById('eclipse-right');
+        // Both eclipses rotate around the same center point for synchronized spin
+        const eclipseCenterX = 35;
+        const eclipseCenterY = 12;
 
         const tl = gsap.timeline({
             onComplete: () => {
                 if (group.parentNode) {
                     group.parentNode.removeChild(group);
+                }
+                // Reset eclipse rotations when animation completes
+                if (eclipseLeft) {
+                    eclipseLeft.setAttribute('transform', `rotate(0, ${eclipseCenterX}, ${eclipseCenterY})`);
+                }
+                if (eclipseRight) {
+                    eclipseRight.setAttribute('transform', `rotate(0, ${eclipseCenterX}, ${eclipseCenterY})`);
                 }
             }
         });
@@ -200,7 +214,7 @@
                 const tangentAngle = radialAngle + (Math.PI / 2);
                 const rotationDegrees = ((tangentAngle + Math.PI) * 180) / Math.PI + 90;
                 
-                positionHistory.push({ x: pos.x, y: pos.y, angle: currentAngle });
+                positionHistory.push({ x: pos.x, y: pos.y });
                 
                 if (positionHistory.length > maxHistoryPoints) {
                     positionHistory.shift();
@@ -208,6 +222,15 @@
                 
                 group.setAttribute('transform', `translate(${pos.x}, ${pos.y})`);
                 group.starGroup.setAttribute('transform', `rotate(${rotationDegrees})`);
+                
+                // Rotate eclipses continuously as the orbit progresses
+                const eclipseRotation = currentAngle * 360;
+                if (eclipseLeft) {
+                    eclipseLeft.setAttribute('transform', `rotate(${eclipseRotation}, ${eclipseCenterX}, ${eclipseCenterY})`);
+                }
+                if (eclipseRight) {
+                    eclipseRight.setAttribute('transform', `rotate(${eclipseRotation}, ${eclipseCenterX}, ${eclipseCenterY})`);
+                }
                 
                 if (positionHistory.length >= 3) {
                     let pathData = '';
@@ -283,6 +306,18 @@
                 while (container.firstChild) {
                     container.removeChild(container.firstChild);
                 }
+            }
+            
+            // Reset eclipse rotations when starting new animation
+            const eclipseLeft = document.getElementById('eclipse-left');
+            const eclipseRight = document.getElementById('eclipse-right');
+            const eclipseCenterX = 35;
+            const eclipseCenterY = 12;
+            if (eclipseLeft) {
+                eclipseLeft.setAttribute('transform', `rotate(0, ${eclipseCenterX}, ${eclipseCenterY})`);
+            }
+            if (eclipseRight) {
+                eclipseRight.setAttribute('transform', `rotate(0, ${eclipseCenterX}, ${eclipseCenterY})`);
             }
 
             const particle = createParticle();
