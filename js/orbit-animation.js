@@ -1,53 +1,24 @@
+// Orbit animation when star is clicked
 (function() {
     'use strict';
-
-    const ORBIT_CONFIG = {
-        centerX: 200,
-        centerY: 25,
-        radius: 420,
-        starSize: 70,
-        particleColor: '#ffffff',
-        particleOpacity: 1,
-        trailLength: 1500,
-        trailStreaks: 5,
-        trailWidth: 25,
-        trailSpacing: 12,
-        glitterParticleCount: 60,
-        glitterParticleSize: 2,
-        duration: 1.8,
-        fadeOutDuration: 0.4,
-        ease: 'sine.inOut',
-        startAngle: 0,
-        eclipseCenterX: 35,
-        eclipseCenterY: 12
-    };
-
-    function getPositionOnCircle(angle) {
-        const { centerX, centerY, radius } = ORBIT_CONFIG;
-        const radians = (angle * Math.PI * 2) + (ORBIT_CONFIG.startAngle * Math.PI * 2);
-        return {
-            x: centerX + Math.cos(radians) * radius,
-            y: centerY + Math.sin(radians) * radius
-        };
-    }
 
     function createParticle() {
         const container = document.getElementById('orbit-container');
         if (!container) return null;
 
-        const group = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-        group.setAttribute('class', 'orbit-particle-group');
+        const group = Utils.createSVGElement('g', { class: 'orbit-particle-group' });
 
-        // Create multiple parallel trail streaks
         const trails = [];
         for (let i = 0; i < ORBIT_CONFIG.trailStreaks; i++) {
-            const trail = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-            trail.setAttribute('class', 'orbit-trail');
-            trail.setAttribute('stroke', 'url(#shootingStarGradient)');
-            trail.setAttribute('stroke-width', ORBIT_CONFIG.trailWidth);
-            trail.setAttribute('stroke-linecap', 'butt');
-            trail.setAttribute('stroke-linejoin', 'miter');
-            trail.setAttribute('fill', 'none');
+            const trail = Utils.createSVGElement('path', {
+                class: 'orbit-trail',
+                stroke: 'url(#shootingStarGradient)',
+                'stroke-width': ORBIT_CONFIG.trailWidth,
+                'stroke-linecap': 'butt',
+                'stroke-linejoin': 'miter',
+                fill: 'none',
+                d: 'M 0,0'
+            });
             
             const centerIndex = Math.floor(ORBIT_CONFIG.trailStreaks / 2);
             const distanceFromCenter = Math.abs(i - centerIndex);
@@ -55,32 +26,89 @@
             
             trail.setAttribute('opacity', opacity);
             trail.setAttribute('filter', 'url(#stardustGlow)');
-            trail.setAttribute('d', 'M 0,0');
             trails.push(trail);
         }
 
-        const particle = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        particle.setAttribute('class', 'orbit-particle');
+        const particle = Utils.createSVGElement('path', {
+            class: 'orbit-particle'
+        });
         
         const starSize = ORBIT_CONFIG.starSize;
         const outerRadius = starSize;
         const innerRadius = starSize * 0.3;
         const backStretch = 1.4;
         const frontShrink = 0.85;
+        const sideShrink = 0.7;
         let starPath = '';
         
+        const points = [];
         for (let i = 0; i < 8; i++) {
             const angle = (i * Math.PI) / 4 - Math.PI / 2;
             let radius = i % 2 === 0 ? outerRadius : innerRadius;
             
             if (i === 0) radius = radius * backStretch;
             else if (i === 4) radius = radius * frontShrink;
+            else if (i === 2 || i === 6) radius = radius * sideShrink;
             
             const x = Math.cos(angle) * radius;
             const y = Math.sin(angle) * radius;
+            points.push({ x, y, angle, radius, isInner: i % 2 === 1 });
+        }
+        
+        // Build path with curves only for inner sides (segments connecting to inner points)
+        for (let i = 0; i < points.length; i++) {
+            const point = points[i];
+            const prevPoint = points[(i - 1 + points.length) % points.length];
             
-            if (i === 0) starPath += `M ${x} ${y}`;
-            else starPath += ` L ${x} ${y}`;
+            if (i === 0) {
+                starPath += `M ${point.x} ${point.y}`;
+            } else if (point.isInner) {
+                // Curving INTO an inner point - create deeper curve from outer point
+                const angleDiff = point.angle - prevPoint.angle;
+                let normalizedDiff = angleDiff;
+                if (normalizedDiff > Math.PI) normalizedDiff -= 2 * Math.PI;
+                if (normalizedDiff < -Math.PI) normalizedDiff += 2 * Math.PI;
+                
+                // Control points create a deeper curve that pulls more toward center
+                const t1 = 0.3;
+                const t2 = 0.7;
+                const angle1 = prevPoint.angle + normalizedDiff * t1;
+                const angle2 = prevPoint.angle + normalizedDiff * t2;
+                
+                // Control points positioned to create deeper inward curve (pull more toward center)
+                const control1Radius = prevPoint.radius * 0.5;
+                const control2Radius = point.radius * 0.95;
+                const control1X = Math.cos(angle1) * control1Radius;
+                const control1Y = Math.sin(angle1) * control1Radius;
+                const control2X = Math.cos(angle2) * control2Radius;
+                const control2Y = Math.sin(angle2) * control2Radius;
+                
+                starPath += ` C ${control1X} ${control1Y} ${control2X} ${control2Y} ${point.x} ${point.y}`;
+            } else if (prevPoint.isInner) {
+                // Curving OUT OF an inner point - create deeper curve to outer point (sharper edge)
+                const angleDiff = point.angle - prevPoint.angle;
+                let normalizedDiff = angleDiff;
+                if (normalizedDiff > Math.PI) normalizedDiff -= 2 * Math.PI;
+                if (normalizedDiff < -Math.PI) normalizedDiff += 2 * Math.PI;
+                
+                // Control points create a deeper curve that approaches outer point more directly
+                const t1 = 0.15;
+                const t2 = 0.5;
+                const angle1 = prevPoint.angle + normalizedDiff * t1;
+                const angle2 = prevPoint.angle + normalizedDiff * t2;
+                
+                // Control points positioned to create deeper outward curve, approaching outer point sharply
+                const control1Radius = prevPoint.radius * 0.95;
+                const control2Radius = point.radius * 0.5;
+                const control1X = Math.cos(angle1) * control1Radius;
+                const control1Y = Math.sin(angle1) * control1Radius;
+                const control2X = Math.cos(angle2) * control2Radius;
+                const control2Y = Math.sin(angle2) * control2Radius;
+                
+                starPath += ` C ${control1X} ${control1Y} ${control2X} ${control2Y} ${point.x} ${point.y}`;
+            } else {
+                starPath += ` L ${point.x} ${point.y}`;
+            }
         }
         starPath += ' Z';
         
@@ -89,19 +117,16 @@
         particle.setAttribute('opacity', ORBIT_CONFIG.particleOpacity);
         particle.setAttribute('filter', 'url(#orbitGlow)');
 
-        const starGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-        starGroup.setAttribute('class', 'orbit-star-group');
+        const starGroup = Utils.createSVGElement('g', { class: 'orbit-star-group' });
         starGroup.appendChild(particle);
         
-        const glitterGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-        glitterGroup.setAttribute('class', 'orbit-glitter-group');
+        const glitterGroup = Utils.createSVGElement('g', { class: 'orbit-glitter-group' });
         
-        // Add all trails to group
         trails.forEach(trail => group.appendChild(trail));
         group.appendChild(glitterGroup);
         group.appendChild(starGroup);
         
-        const startPos = getPositionOnCircle(ORBIT_CONFIG.startAngle);
+        const startPos = Utils.getPositionOnCircle(ORBIT_CONFIG.startAngle, ORBIT_CONFIG.centerX, ORBIT_CONFIG.centerY, ORBIT_CONFIG.radius);
         group.setAttribute('transform', `translate(${startPos.x}, ${startPos.y})`);
 
         container.appendChild(group);
@@ -116,10 +141,7 @@
     }
 
     function updateGlitterParticles(glitterGroup, positionHistory, currentPos, startIdx) {
-        while (glitterGroup.firstChild) {
-            glitterGroup.removeChild(glitterGroup.firstChild);
-        }
-        
+        glitterGroup.innerHTML = '';
         if (positionHistory.length < 3) return;
         
         const particleCount = ORBIT_CONFIG.glitterParticleCount;
@@ -144,20 +166,14 @@
                 const offsetX = point.x - currentPos.x + randomX + flowX + driftX;
                 const offsetY = point.y - currentPos.y + randomY + flowY + driftY;
                 
-                const glitter = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                const sizeVariation = 0.5 + Math.random() * 0.8;
-                const actualSize = particleSize * sizeVariation;
-                
-                glitter.setAttribute('cx', offsetX);
-                glitter.setAttribute('cy', offsetY);
-                glitter.setAttribute('r', actualSize);
-                glitter.setAttribute('fill', '#ffffff');
-                
-                const baseOpacity = 0.2 + (1 - t) * 0.4;
-                const sparkleVariation = 0.15 * Math.sin(i * 2.5 + Math.random() * 2);
-                const opacity = Math.min(0.8, Math.max(0.1, baseOpacity + sparkleVariation));
-                glitter.setAttribute('opacity', opacity);
-                glitter.setAttribute('filter', 'url(#smokeGlow)');
+                const glitter = Utils.createSVGElement('circle', {
+                    cx: offsetX,
+                    cy: offsetY,
+                    r: particleSize * (0.5 + Math.random() * 0.8),
+                    fill: '#ffffff',
+                    opacity: Math.min(0.8, Math.max(0.1, 0.2 + (1 - t) * 0.4 + 0.15 * Math.sin(i * 2.5 + Math.random() * 2))),
+                    filter: 'url(#smokeGlow)'
+                });
                 
                 glitterGroup.appendChild(glitter);
             }
@@ -180,7 +196,6 @@
                 if (group.parentNode) {
                     group.parentNode.removeChild(group);
                 }
-                // Reset eclipse rotations when animation completes
                 if (eclipseLeft) {
                     eclipseLeft.setAttribute('transform', `rotate(0, ${eclipseCenterX}, ${eclipseCenterY})`);
                 }
@@ -200,11 +215,11 @@
             ease: ORBIT_CONFIG.ease,
             onUpdate: function() {
                 const currentAngle = ORBIT_CONFIG.startAngle + progress.value;
-                const pos = getPositionOnCircle(currentAngle);
+                const pos = Utils.getPositionOnCircle(currentAngle, ORBIT_CONFIG.centerX, ORBIT_CONFIG.centerY, ORBIT_CONFIG.radius);
                 
                 const radialAngle = currentAngle * Math.PI * 2;
                 const tangentAngle = radialAngle + (Math.PI / 2);
-                const rotationDegrees = ((tangentAngle + Math.PI) * 180) / Math.PI + 90;
+                const rotationDegrees = (tangentAngle * 180) / Math.PI + 270;
                 
                 positionHistory.push({ x: pos.x, y: pos.y });
                 
@@ -294,7 +309,6 @@
         let currentAnimation = null;
 
         star.addEventListener('click', function(e) {
-            e.preventDefault();
             e.stopPropagation();
 
             if (currentAnimation) {
@@ -304,20 +318,14 @@
 
             const container = document.getElementById('orbit-container');
             if (container) {
-                while (container.firstChild) {
-                    container.removeChild(container.firstChild);
-                }
+                container.innerHTML = '';
             }
             
             const eclipseLeft = document.getElementById('eclipse-left');
             const eclipseRight = document.getElementById('eclipse-right');
             const { eclipseCenterX, eclipseCenterY } = ORBIT_CONFIG;
-            if (eclipseLeft) {
-                eclipseLeft.setAttribute('transform', `rotate(0, ${eclipseCenterX}, ${eclipseCenterY})`);
-            }
-            if (eclipseRight) {
-                eclipseRight.setAttribute('transform', `rotate(0, ${eclipseCenterX}, ${eclipseCenterY})`);
-            }
+            if (eclipseLeft) eclipseLeft.setAttribute('transform', `rotate(0, ${eclipseCenterX}, ${eclipseCenterY})`);
+            if (eclipseRight) eclipseRight.setAttribute('transform', `rotate(0, ${eclipseCenterX}, ${eclipseCenterY})`);
 
             const particle = createParticle();
             if (particle) {
@@ -326,173 +334,16 @@
         });
     }
 
-    function init() {
-        if (typeof gsap === 'undefined') return;
-
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', setupStarClick);
-        } else {
-            setupStarClick();
+    window.OrbitAnimation = {
+        init() {
+            if (typeof gsap === 'undefined') return;
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', setupStarClick);
+            } else {
+                setupStarClick();
+            }
         }
-    }
-    
-    function animateLetterN() {
-        const noxGroup = document.getElementById('logo-text-nox');
-        if (!noxGroup) return;
-        
-        const bbox = noxGroup.getBBox();
-        const centerX = bbox.x + bbox.width / 2;
-        const centerY = bbox.y + bbox.height / 2;
-        
-        gsap.timeline({ defaults: { transformOrigin: `${centerX}px ${centerY}px` } })
-            .to(noxGroup, { skewY: 2, scaleY: 1.04, duration: 0.3, ease: 'sine.out' })
-            .to(noxGroup, { skewY: -2, scaleY: 0.97, duration: 0.35, ease: 'sine.inOut' })
-            .to(noxGroup, { skewY: 1, scaleY: 1.02, duration: 0.3, ease: 'sine.inOut' })
-            .to(noxGroup, { skewY: 0, scaleY: 1, duration: 0.4, ease: 'sine.out' });
-    }
-    
-    function animateLetterX() {
-        const verseGroup = document.getElementById('logo-text-verse');
-        if (!verseGroup) return;
-        
-        const cloneCount = 8;
-        
-        for (let i = 0; i < cloneCount; i++) {
-            const clone = verseGroup.cloneNode(true);
-            clone.removeAttribute('id');
-            clone.style.pointerEvents = 'none';
-            verseGroup.parentNode.appendChild(clone);
-            
-            const angle = (Math.PI * 2 * i) / cloneCount + (Math.random() - 0.5) * 0.3;
-            const distance = 15 + Math.random() * 20;
-            const targetX = Math.cos(angle) * distance;
-            const targetY = Math.sin(angle) * distance;
-            const hueShift = Math.random() * 60 - 30;
-            
-            gsap.timeline({
-                onComplete: () => {
-                    if (clone.parentNode) {
-                        clone.parentNode.removeChild(clone);
-                    }
-                }
-            })
-            .set(clone, {
-                opacity: 0.7,
-                filter: `hue-rotate(${hueShift}deg)`
-            })
-            .to(clone, {
-                x: targetX,
-                y: targetY,
-                rotation: (Math.random() - 0.5) * 180,
-                opacity: 0,
-                scale: 0.5 + Math.random() * 0.5,
-                duration: 0.6 + Math.random() * 0.3,
-                ease: 'power3.out',
-                delay: i * 0.02
-            });
-        }
-        
-        const tl = gsap.timeline();
-        
-        for (let i = 0; i < 6; i++) {
-            tl.to(verseGroup, {
-                x: (Math.random() - 0.5) * 8,
-                y: (Math.random() - 0.5) * 4,
-                duration: 0.05,
-                ease: 'none'
-            });
-        }
-        
-        tl.to(verseGroup, {
-            opacity: 0.2,
-            scale: 1.2,
-            filter: 'blur(2px)',
-            duration: 0.15,
-            ease: 'power2.out'
-        })
-        .to(verseGroup, {
-            opacity: 0,
-            scale: 0.8,
-            duration: 0.1
-        })
-        .to(verseGroup, {
-            opacity: 0,
-            duration: 0.3
-        })
-        .to(verseGroup, {
-            opacity: 1,
-            scale: 1.3,
-            filter: 'blur(0px)',
-            duration: 0.08,
-            ease: 'power2.out'
-        })
-        .to(verseGroup, {
-            x: -3,
-            duration: 0.05
-        })
-        .to(verseGroup, {
-            x: 3,
-            duration: 0.05
-        })
-        .to(verseGroup, {
-            x: -2,
-            duration: 0.05
-        })
-        .to(verseGroup, {
-            x: 0,
-            y: 0,
-            scale: 1,
-            duration: 0.4,
-            ease: 'elastic.out(1, 0.6)'
-        });
-    }
-    
-    function setupLetterClicks() {
-        const noxGroup = document.getElementById('logo-text-nox');
-        const verseGroup = document.getElementById('logo-text-verse');
-        
-        if (noxGroup) {
-            noxGroup.style.cursor = 'pointer';
-            noxGroup.addEventListener('click', (e) => {
-                e.stopPropagation();
-                animateLetterN();
-            });
-        }
-        
-        if (verseGroup) {
-            verseGroup.style.cursor = 'pointer';
-            verseGroup.addEventListener('click', (e) => {
-                e.stopPropagation();
-                animateLetterX();
-            });
-        }
-    }
-
-    function setupInstructions() {
-        const panel = document.getElementById('instructions');
-        const header = document.querySelector('.instructions-header');
-        
-        if (!panel || !header) return;
-        
-        const isFirstVisit = !localStorage.getItem('nox-visited');
-        if (isFirstVisit) {
-            panel.classList.add('first-visit');
-            localStorage.setItem('nox-visited', 'true');
-            
-            setTimeout(() => {
-                panel.classList.add('collapsed');
-            }, 8000);
-        } else {
-            panel.classList.add('collapsed');
-        }
-        
-        header.addEventListener('click', () => {
-            panel.classList.toggle('collapsed');
-        });
-    }
-
-    init();
-    setupLetterClicks();
-    setupInstructions();
+    };
 
 })();
+
