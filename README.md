@@ -1,19 +1,37 @@
-# NOX:VERSE Interactive Logo - Step by Step
+# NOX:VERSE Interactive Logo
 
-This project builds an interactive logo step by step for learning purposes.
+An interactive cosmic-themed logo with GSAP animations and user interactions.
 
-## Current Step: Step 1 - Color Selection
+## Features
 
-The logo is currently displayed with a basic color palette. No animations or interactions yet.
+- **Logo Entrance Animation** - Stellar emergence animation on page load
+- **Orbit Animation** - Click the star to trigger a cosmic particle orbit
+- **Letter Interactions** - Click "NOX" or "VERSE" for animated effects
+- **Starfield Background** - Animated twinkling stars
+- **Scroll Animations** - ScrollTrigger available for scroll-based effects
+
+## Project Structure
+
+### JavaScript Modules (`js/`)
+- `logo-entrance.js` - Page load entrance animation
+- `orbit-animation.js` - Star click orbit effect
+- `letter-n.js` - NOX text animation
+- `letter-x.js` - VERSE text animation
+- `starfield.js` - Background starfield animation
+- `instructions.js` - Help panel functionality
+- `main.js` - Main initialization
+- `config.js` - Shared configuration
+- `utils.js` - Utility functions
 
 ### SVG Structure
 
 The logo is organized with these IDs:
 - `#logo-noxverse` - Main wrapper group
 - `#logo-ring` - The eclipse ring (the "O")
-- `#logo-star` - The star inside the ring
-- `#logo-text-nox` - The word "NOX"
-- `#logo-text-verse` - The word "VERSE"
+- `#logo-star` - The star inside the ring (clickable)
+- `#logo-text-nox` - The word "NOX" (clickable)
+- `#logo-text-verse` - The word "VERSE" (clickable)
+- `#logo-text-noxverse-bottom` - Bottom text
 
 ### Color Customization
 
@@ -31,13 +49,17 @@ To change colors, edit the `:root` section in `styles.css`:
 - **Cool**: Blues, cyans, teals
 - **Neon**: Bright, saturated colors
 
-## Next Steps
+## Technologies
 
-After deciding on colors:
-- Step 2: Add initial entrance animation
-- Step 3: Add idle state animations
-- Step 4: Add mouse interaction
-- Step 5: Add camera tracking (optional)
+- **GSAP 3.12.5** - Animation library
+- **ScrollTrigger** - Scroll-based animations (available)
+- **Vanilla JavaScript** - No frameworks
+- **SVG** - Vector graphics
+
+## Documentation
+
+- `ORBIT_ANIMATION_GUIDE.md` - Detailed guide for the orbit animation feature
+- `GIT_WORKFLOW.md` - Git branching workflow instructions
 
 ## Git Workflow
 

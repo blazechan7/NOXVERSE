@@ -26,6 +26,13 @@
     function init() {
         if (typeof gsap === 'undefined') return;
         
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Initialize logo entrance animation first (runs on page load)
+        if (typeof LogoEntrance !== 'undefined') {
+            LogoEntrance.init();
+        }
+        
         OrbitAnimation.init();
         setupLetterClicks();
         Instructions.init();
