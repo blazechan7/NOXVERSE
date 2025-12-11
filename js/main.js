@@ -2,6 +2,12 @@
 (function() {
     'use strict';
 
+    window.scrollTo(0, 0);
+    
+    if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+    }
+
     function setupLetterClicks() {
         const noxGroup = document.getElementById('logo-text-nox');
         const verseGroup = document.getElementById('logo-text-verse');
@@ -28,7 +34,6 @@
         
         gsap.registerPlugin(ScrollTrigger);
         
-        // Initialize logo entrance animation first (runs on page load)
         if (typeof LogoEntrance !== 'undefined') {
             LogoEntrance.init();
         }
@@ -37,6 +42,26 @@
         setupLetterClicks();
         Instructions.init();
         Starfield.init();
+        
+        if (typeof SectionAnimations !== 'undefined') {
+            SectionAnimations.init();
+        }
+        
+        if (typeof CosmicAbout !== 'undefined') {
+            CosmicAbout.init();
+        }
+        
+        if (typeof ShootingStarCTA !== 'undefined') {
+            ShootingStarCTA.init();
+        }
+        
+        if (typeof InfoTool !== 'undefined') {
+            InfoTool.init();
+        }
+        
+        if (typeof Constellation !== 'undefined') {
+            Constellation.init();
+        }
     }
 
     if (document.readyState === 'loading') {
