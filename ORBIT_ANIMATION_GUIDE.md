@@ -10,6 +10,7 @@ The orbit animation creates a cosmic particle effect when the star (`#logo-star`
 
 1. **`index.html`**
    - Added GSAP library CDN link
+   - Added ScrollTrigger plugin (available for scroll animations)
    - Added SVG filters in `<defs>`:
      - `#orbitGlow` - Glow filter for the star particle
      - `#stardustGlow` - Enhanced glow for the trail
@@ -18,6 +19,8 @@ The orbit animation creates a cosmic particle effect when the star (`#logo-star`
      - `#shootingStarGradient` - Color gradient for the trail (magenta → lavender → blue → white)
    - Added orbit container group (`#orbit-container`) before the main logo
    - Added `orbit-animation.js` script
+   
+   **Note**: The project also includes `logo-entrance.js` for page load animations, but this guide focuses specifically on the orbit animation feature.
 
 2. **`orbit-animation.js`** (NEW)
    - Complete animation logic
