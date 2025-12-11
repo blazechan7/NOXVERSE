@@ -1,4 +1,3 @@
-// Background starfield animation
 (function() {
     'use strict';
 

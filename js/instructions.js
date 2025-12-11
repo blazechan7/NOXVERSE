@@ -1,10 +1,12 @@
-// Instructions panel functionality
+// Instructions Panel with Multiple Pages
 (function() {
     'use strict';
 
     function setupInstructions() {
         const panel = document.getElementById('instructions');
         const header = document.querySelector('.instructions-header');
+        const pageNavBtns = document.querySelectorAll('.page-nav-btn');
+        const pages = document.querySelectorAll('.instruction-page');
         
         if (!panel || !header) return;
         
@@ -23,6 +25,27 @@
         header.addEventListener('click', () => {
             panel.classList.toggle('collapsed');
         });
+        
+        // Page navigation
+        pageNavBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const targetPage = btn.getAttribute('data-page');
+                
+                // Update active button
+                pageNavBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // Update active page
+                pages.forEach(page => {
+                    if (page.getAttribute('data-page') === targetPage) {
+                        page.classList.add('active');
+                    } else {
+                        page.classList.remove('active');
+                    }
+                });
+            });
+        });
     }
 
     window.Instructions = {
@@ -30,4 +53,3 @@
     };
 
 })();
-

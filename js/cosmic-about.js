@@ -1,4 +1,3 @@
-// Cosmic particles animation for About section
 (function() {
     'use strict';
 
@@ -61,7 +60,6 @@
         const aboutSection = document.getElementById('about');
         if (!aboutSection) return;
 
-        // Create cosmic particles
         for (let i = 0; i < 10; i++) {
             setTimeout(() => {
                 createCosmicParticle();

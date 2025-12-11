@@ -62,6 +62,14 @@
         if (typeof Constellation !== 'undefined') {
             Constellation.init();
         }
+        
+        if (typeof StarfallSkills !== 'undefined') {
+            StarfallSkills.init();
+        }
+        
+        if (typeof ContactForm !== 'undefined') {
+            ContactForm.init();
+        }
     }
 
     if (document.readyState === 'loading') {

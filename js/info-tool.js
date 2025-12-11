@@ -1,4 +1,3 @@
-// Interactive info tool with trail animation
 (function() {
     'use strict';
 
