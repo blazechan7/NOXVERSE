@@ -192,6 +192,9 @@
                 trail.setAttribute('d', 'M 0,0');
             });
 
+            // Add initial position to history so trails can start immediately
+            positionHistory.push({ x: startX, y: startY });
+
             // Function to update trails
             const updateTrails = function() {
                 const currentX = gsap.getProperty(group, 'x');
@@ -212,13 +215,6 @@
                 }
                 
                 gsap.set(starPath, { opacity: starOpacity });
-                
-                // Only start building trails once star has moved downward significantly
-                // This prevents horizontal trails from appearing before the star falls
-                const minVerticalMovement = 25;
-                if (currentY < startY + minVerticalMovement) {
-                    return;
-                }
                 
                 // Add current position to history
                 positionHistory.push({ x: currentX, y: currentY });
@@ -293,6 +289,9 @@
                         opacity: 1
                     });
                     gsap.set(starPath, { opacity: 1 });
+                    
+                    // Add new starting position to history so trails can start immediately
+                    positionHistory.push({ x: newX, y: newStartY });
                 }
             });
 

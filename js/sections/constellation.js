@@ -23,6 +23,7 @@
         nodes.forEach((node) => {
             const nodeInfo = node.querySelector('.node-info');
             const star = node.querySelector('.node-star');
+            const isNode2 = node.getAttribute('data-node') === '2';
             let isHovered = false;
             let hideTimeout = null;
 
@@ -65,7 +66,7 @@
                         gsap.killTweensOf(nodeInfo);
                         gsap.to(nodeInfo, {
                             opacity: 0,
-                            y: 10,
+                            y: isNode2 ? 10 : -10,
                             duration: 0.3,
                             ease: 'power2.in'
                         });

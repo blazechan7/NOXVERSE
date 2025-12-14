@@ -95,6 +95,14 @@
         const exploreProjectsButton = document.getElementById('explore-projects-button');
         const projectsSection = document.getElementById('projects');
         createShootingStarAnimation(exploreProjectsButton, projectsSection);
+
+        const discoverSkillsButton = document.getElementById('discover-skills-button');
+        const skillsSection = document.getElementById('skills');
+        createShootingStarAnimation(discoverSkillsButton, skillsSection);
+
+        const contactMeButton = document.getElementById('contact-me-button');
+        const contactSection = document.getElementById('contact');
+        createShootingStarAnimation(contactMeButton, contactSection);
     }
 
     window.ShootingStarCTA = {

@@ -53,11 +53,8 @@
     }
     
     function initStarfield() {
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', createStarfield);
-        } else {
-            createStarfield();
-        }
+        // DOM is already ready when called from main.js
+        createStarfield();
     }
 
     window.Starfield = {

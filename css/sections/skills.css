@@ -1,0 +1,146 @@
+/* Skills Section */
+.skills-legend {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(168, 184, 255, 0.05);
+    border: 1px solid rgba(168, 184, 255, 0.2);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.legend-item:hover {
+    background: rgba(168, 184, 255, 0.1);
+    border-color: rgba(168, 184, 255, 0.4);
+}
+
+.legend-star {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    box-shadow: 0 0 8px currentColor;
+}
+
+.legend-purple {
+    background: #9b59b6;
+    color: #9b59b6;
+    box-shadow: 0 0 8px #9b59b6, 0 0 16px rgba(155, 89, 182, 0.5);
+}
+
+.legend-blue {
+    background: #4a90e2;
+    color: #4a90e2;
+    box-shadow: 0 0 8px #4a90e2, 0 0 16px rgba(74, 144, 226, 0.5);
+}
+
+.legend-gold {
+    background: #f39c12;
+    color: #f39c12;
+    box-shadow: 0 0 8px #f39c12, 0 0 16px rgba(243, 156, 18, 0.5);
+}
+
+.legend-green {
+    background: #27ae60;
+    color: #27ae60;
+    box-shadow: 0 0 8px #27ae60, 0 0 16px rgba(39, 174, 96, 0.5);
+}
+
+.legend-text {
+    font-size: 0.9rem;
+    color: var(--color-moonlight-white);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+}
+
+.starfall-container {
+    position: relative;
+    height: 600px;
+    width: 100%;
+    margin-top: 1rem;
+    overflow: hidden;
+}
+
+.starfall-svg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.skill-star-group {
+    cursor: pointer;
+    pointer-events: all;
+}
+
+.skill-star-group:hover .skill-star-path {
+    opacity: 1;
+    filter: url(#starfallOrbitGlow);
+}
+
+.skill-star-path {
+    opacity: 1;
+    filter: url(#starfallGlow);
+    transition: opacity 0.3s ease;
+    stroke: #ffffff;
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+}
+
+.skill-info-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.skill-info {
+    position: absolute;
+    background: rgba(10, 15, 30, 0.95);
+    border: 1px solid rgba(168, 184, 255, 0.3);
+    border-radius: 8px;
+    padding: 1rem 1.5rem;
+    min-width: 200px;
+    max-width: 250px;
+    opacity: 0;
+    pointer-events: none;
+    backdrop-filter: blur(10px);
+    transition: opacity 0.3s ease;
+    transform: translateY(-50%);
+    white-space: normal;
+    word-wrap: break-word;
+}
+
+.skill-info.visible {
+    opacity: 1;
+}
+
+.skill-name {
+    font-family: 'Copperplate Gothic Light', 'Copperplate', 'Copperplate Gothic', 'Engravers MT', serif;
+    font-size: 1.1rem;
+    color: var(--color-pale-blue-glow);
+    margin-bottom: 0.5rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.skill-description {
+    font-size: 0.9rem;
+    color: var(--color-moonlight-white);
+    opacity: 0.8;
+    line-height: 1.4;
+}

@@ -11,24 +11,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
     <!-- Core files (load first) -->
-    <script src="js/config.js" defer></script>
-    <script src="js/utils.js" defer></script>
-    <!-- Animation modules -->
-    <script src="js/logo-entrance.js" defer></script>
-    <script src="js/orbit-animation.js" defer></script>
-    <script src="js/letter-n.js" defer></script>
-    <script src="js/letter-x.js" defer></script>
-    <script src="js/starfield.js" defer></script>
-    <script src="js/section-animations.js" defer></script>
-    <script src="js/cosmic-about.js" defer></script>
-    <script src="js/shooting-star-cta.js" defer></script>
-    <script src="js/info-tool.js" defer></script>
-    <script src="js/constellation.js" defer></script>
-    <script src="js/starfall-skills.js" defer></script>
-    <script src="js/contact-form.js" defer></script>
-    <script src="js/instructions.js" defer></script>
+    <script src="js/core/config.js" defer></script>
+    <script src="js/core/utils.js" defer></script>
+    <!-- Logo animations -->
+    <script src="js/logo/logo-entrance.js" defer></script>
+    <script src="js/logo/orbit-animation.js" defer></script>
+    <script src="js/logo/letter-n.js" defer></script>
+    <script src="js/logo/letter-x.js" defer></script>
+    <!-- Section animations -->
+    <script src="js/sections/section-animations.js" defer></script>
+    <script src="js/sections/constellation.js" defer></script>
+    <script src="js/sections/starfall-skills.js" defer></script>
+    <script src="js/sections/contact-form.js" defer></script>
+    <!-- UI Components -->
+    <script src="js/components/starfield.js" defer></script>
+    <script src="js/components/shooting-star-cta.js" defer></script>
+    <script src="js/components/info-tool.js" defer></script>
+    <script src="js/components/instructions.js" defer></script>
     <!-- Initialization (load last) -->
-    <script src="js/main.js" defer></script>
+    <script src="js/core/main.js" defer></script>
 </head>
 <body>
     <div id="starfield" class="starfield"></div>
@@ -126,8 +127,8 @@
             <button class="star-button" id="explore-button">
                 <div class="star-trail"></div>
                 <div class="star-core">
-                    <span class="star-text-primary">Discover Our Universe</span>
-                    <span class="star-text-secondary">Learn About Us</span>
+                    <span class="star-text-primary">Discover My Universe</span>
+                    <span class="star-text-secondary">Learn About Me</span>
                 </div>
             </button>
         </div>
@@ -135,7 +136,6 @@
     
     <!-- About Section -->
     <section id="about" class="content-section about-section">
-        <div class="cosmic-bg"></div>
         <div class="section-content">
             <h2 class="section-title">About</h2>
             <div class="about-content">
@@ -149,16 +149,16 @@
                     through the <span class="cosmic-highlight">digital cosmos</span>.
                 </p>
             </div>
-            
-            <div class="shooting-star-cta">
-                <button class="star-button" id="explore-projects-button">
-                    <div class="star-trail"></div>
-                    <div class="star-core">
-                        <span class="star-text-primary">Explore Our Projects</span>
-                        <span class="star-text-secondary">View Our Work</span>
-                    </div>
-                </button>
-            </div>
+        </div>
+        
+        <div class="shooting-star-cta">
+            <button class="star-button" id="explore-projects-button">
+                <div class="star-trail"></div>
+                <div class="star-core">
+                    <span class="star-text-primary">Explore Our Projects</span>
+                    <span class="star-text-secondary">View My Work</span>
+                </div>
+            </button>
         </div>
     </section>
     
@@ -208,6 +208,16 @@
                     </div>
                 </div>
             </div>
+        </div>
+        
+        <div class="shooting-star-cta">
+            <button class="star-button" id="discover-skills-button">
+                <div class="star-trail"></div>
+                <div class="star-core">
+                    <span class="star-text-primary">Discover My Skills</span>
+                    <span class="star-text-secondary">See What I Can Do</span>
+                </div>
+            </button>
         </div>
     </section>
     
@@ -294,6 +304,16 @@
                 <div class="skill-info-container"></div>
             </div>
         </div>
+        
+        <div class="shooting-star-cta">
+            <button class="star-button" id="contact-me-button">
+                <div class="star-trail"></div>
+                <div class="star-core">
+                    <span class="star-text-primary">Get In Touch</span>
+                    <span class="star-text-secondary">Let's Work Together</span>
+                </div>
+            </button>
+        </div>
     </section>
     
     <!-- Contact Section -->
@@ -303,7 +323,7 @@
             <div class="contact-content">
                 <p class="contact-text">Let's build your universe together</p>
                 <p class="contact-subtext">Reach out and let's create something that lasts.</p>
-                <form class="contact-form" id="contact-form" action="https://formsubmit.co/bloozychan@gmail.com" method="POST">
+                <form class="contact-form" id="contact-form" action="https://formsubmit.co/bloozychan@gmail.com" method="POST" novalidate>
                     <input type="hidden" name="_subject" value="New Contact from NOX:VERSE">
                     <input type="hidden" name="_captcha" value="false">
                     <input type="hidden" name="_template" value="box">

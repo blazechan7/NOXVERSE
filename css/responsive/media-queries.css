@@ -1,0 +1,54 @@
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .shooting-star-cta {
+        bottom: 2rem;
+    }
+    
+    .star-text-primary {
+        font-size: 0.9rem;
+    }
+    
+    .star-text-secondary {
+        font-size: 0.75rem;
+    }
+    
+    .star-trail {
+        width: 40px;
+    }
+    
+    .section-title {
+        font-size: 3rem;
+        letter-spacing: 0.15em;
+        padding-bottom: 2rem;
+    }
+    
+    .section-title::before,
+    .section-title::after {
+        font-size: 1.2rem;
+        left: -2rem;
+        right: -2rem;
+    }
+    
+    .content-section {
+        padding: 3rem 2rem;
+        padding-top: 3rem;
+    }
+
+    .logo {
+        width: min(85vw, 75vh);
+    }
+
+    .instructions-panel {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        min-width: auto;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        width: min(90vw, 70vh);
+    }
+}

@@ -1,0 +1,99 @@
+/* Info Tool Styles */
+.info-trigger {
+    position: relative;
+    color: var(--color-lavender-moon);
+    cursor: pointer;
+    text-decoration: none;
+    border-bottom: 1px solid var(--color-lavender-moon);
+    transition: all 0.3s ease;
+}
+
+.info-trigger:hover {
+    color: var(--color-pale-blue-glow);
+    text-shadow: 0 0 10px rgba(168, 184, 255, 0.6);
+    border-bottom-color: var(--color-pale-blue-glow);
+}
+
+.info-trail {
+    background: linear-gradient(
+        to right,
+        rgba(168, 184, 255, 0.3) 0%,
+        rgba(168, 184, 255, 0.6) 50%,
+        rgba(255, 255, 255, 0.9) 100%
+    );
+    height: 2px;
+    box-shadow: 0 0 10px rgba(168, 184, 255, 0.8);
+    border-radius: 2px;
+}
+
+.info-panel {
+    position: fixed;
+    background: rgba(15, 21, 32, 0.95);
+    border: 1px solid rgba(168, 184, 255, 0.3);
+    border-radius: 12px;
+    padding: 0;
+    min-width: 300px;
+    max-width: 400px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+                0 0 20px rgba(168, 184, 255, 0.2);
+    z-index: 9999;
+    pointer-events: auto;
+}
+
+.info-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-bottom: 1px solid rgba(168, 184, 255, 0.2);
+}
+
+.info-panel-title {
+    font-family: 'Copperplate Gothic Light', 'Copperplate', 'Copperplate Gothic', 'Engravers MT', serif;
+    color: var(--color-pale-blue-glow);
+    font-size: 1.1rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.info-panel-close {
+    background: none;
+    border: none;
+    color: var(--color-pale-blue-glow);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    line-height: 1;
+}
+
+.info-panel-close:hover {
+    color: var(--color-moonlight-white);
+    transform: scale(1.2);
+}
+
+.info-panel-content {
+    padding: 16px;
+}
+
+.info-panel-content p {
+    color: var(--color-moonlight-white);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    opacity: 0.9;
+    margin: 0;
+}
+
+.cosmic-highlight {
+    color: var(--color-pale-blue-glow);
+    font-weight: 600;
+    text-shadow: 0 0 15px rgba(168, 184, 255, 0.8),
+                 0 0 30px rgba(168, 184, 255, 0.4);
+}

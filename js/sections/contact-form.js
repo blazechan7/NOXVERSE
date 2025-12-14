@@ -15,12 +15,15 @@
     function initContactForm() {
         const form = document.getElementById('contact-form');
         const submitBtn = document.getElementById('contact-submit');
-        const submitText = submitBtn.querySelector('.submit-text');
-        const submitLoader = submitBtn.querySelector('.submit-loader');
         const formMessage = document.getElementById('form-message');
         const emailInput = document.getElementById('contact-email-input');
         
-        if (!form) return;
+        if (!form || !submitBtn || !formMessage || !emailInput) return;
+        
+        const submitText = submitBtn.querySelector('.submit-text');
+        const submitLoader = submitBtn.querySelector('.submit-loader');
+        
+        if (!submitText || !submitLoader) return;
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
