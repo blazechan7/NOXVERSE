@@ -337,11 +337,8 @@
     window.OrbitAnimation = {
         init() {
             if (typeof gsap === 'undefined') return;
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', setupStarClick);
-            } else {
-                setupStarClick();
-            }
+            // DOM is already ready when called from main.js
+            setupStarClick();
         }
     };
 

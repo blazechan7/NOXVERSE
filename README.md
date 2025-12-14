@@ -1,74 +1,56 @@
 # NOX:VERSE Interactive Logo
 
-An interactive cosmic-themed logo with GSAP animations and user interactions.
+An interactive cosmic-themed logo website with animations and user interactions.
 
-## Features
+## What It Does
 
-- **Logo Entrance Animation** - Stellar emergence animation on page load
-- **Orbit Animation** - Click the star to trigger a cosmic particle orbit
-- **Letter Interactions** - Click "NOX" or "VERSE" for animated effects
+- **Logo Animations** - Logo appears with cosmic effects on page load
+- **Interactive Elements** - Click the star, "NOX", or "VERSE" for animations
 - **Starfield Background** - Animated twinkling stars
-- **Scroll Animations** - ScrollTrigger available for scroll-based effects
+- **Project Showcase** - Interactive constellation map of projects
+- **Skills Display** - Falling stars showing different skills
+- **Contact Form** - Working contact form
 
 ## Project Structure
 
-### JavaScript Modules (`js/`)
-- `logo-entrance.js` - Page load entrance animation
-- `orbit-animation.js` - Star click orbit effect
-- `letter-n.js` - NOX text animation
-- `letter-x.js` - VERSE text animation
-- `starfield.js` - Background starfield animation
-- `instructions.js` - Help panel functionality
-- `main.js` - Main initialization
-- `config.js` - Shared configuration
-- `utils.js` - Utility functions
+```
+js/
+  core/          - Main setup and utilities
+  logo/          - Logo animations
+  sections/      - Page sections (about, projects, skills, contact)
+  components/    - Reusable components (starfield, buttons, etc.)
 
-### SVG Structure
-
-The logo is organized with these IDs:
-- `#logo-noxverse` - Main wrapper group
-- `#logo-ring` - The eclipse ring (the "O")
-- `#logo-star` - The star inside the ring (clickable)
-- `#logo-text-nox` - The word "NOX" (clickable)
-- `#logo-text-verse` - The word "VERSE" (clickable)
-- `#logo-text-noxverse-bottom` - Bottom text
-
-### Color Customization
-
-To change colors, edit the `:root` section in `styles.css`:
-
-1. **`--color-main-start/mid/end`** - Main color for text and shapes
-2. **`--color-star-center/mid/outer`** - Star center element gradient
-3. **`--color-eclipse-inner/outer`** - Eclipse ring gradient
-
-### Color Palette Ideas
-
-- **Cosmic** (current): Soft blues, purples, whites
-- **Monochrome**: Grays, whites, blacks
-- **Warm**: Oranges, yellows, reds
-- **Cool**: Blues, cyans, teals
-- **Neon**: Bright, saturated colors
+css/
+  base/         - Colors, fonts, reset styles
+  layout/       - Page layout styles
+  components/   - Component styles
+  sections/     - Section-specific styles
+  animations/   - Animation keyframes
+  responsive/   - Mobile styles
+```
 
 ## Technologies
 
-- **GSAP 3.12.5** - Animation library
-- **ScrollTrigger** - Scroll-based animations (available)
+- **GSAP** - Animation library
 - **Vanilla JavaScript** - No frameworks
 - **SVG** - Vector graphics
+- **CSS** - Modular stylesheets
 
-## Documentation
+## Getting Started
 
-- `ORBIT_ANIMATION_GUIDE.md` - Detailed guide for the orbit animation feature
-- `GIT_WORKFLOW.md` - Git branching workflow instructions
+1. Open `index.html` in a web browser
+2. That's it! No build process needed.
+
+## Customization
+
+### Colors
+Edit `css/base/variables.css` to change the color scheme.
+
+### Content
+- Edit `index.html` for page content
+- Edit JavaScript files in `js/` for functionality
+- Edit CSS files in `css/` for styling
 
 ## Git Workflow
 
-This project uses a 3-branch workflow:
-- **`design`** - Color experiments and visual tweaks
-- **`develop`** - Feature development (animations, interactions)
-- **`main`** - Stable, completed steps
-
-See `GIT_WORKFLOW.md` for detailed instructions on using Git branches.
-
-
-
+See `GIT_WORKFLOW.md` for how to use Git branches.

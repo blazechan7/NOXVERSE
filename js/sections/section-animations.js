@@ -51,20 +51,6 @@
             });
         });
 
-        gsap.utils.toArray('.skill-item').forEach((item, index) => {
-            gsap.from(item, {
-                opacity: 0,
-                scale: 0.8,
-                duration: 0.6,
-                delay: index * 0.1,
-                ease: 'back.out(1.2)',
-                scrollTrigger: {
-                    trigger: item,
-                    start: 'top 85%',
-                    toggleActions: 'play none none none'
-                }
-            });
-        });
 
         gsap.from('.contact-text', {
             opacity: 0,
@@ -78,19 +64,30 @@
             }
         });
 
-        gsap.utils.toArray('.contact-link').forEach((link, index) => {
-            gsap.from(link, {
-                opacity: 0,
-                x: -20,
-                duration: 0.6,
-                delay: index * 0.1,
-                ease: 'power2.out',
-                scrollTrigger: {
-                    trigger: '.contact-links',
-                    start: 'top 85%',
-                    toggleActions: 'play none none none'
-                }
-            });
+        gsap.from('.contact-subtext', {
+            opacity: 0,
+            y: 15,
+            duration: 0.8,
+            delay: 0.2,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: '.contact-content',
+                start: 'top 85%',
+                toggleActions: 'play none none none'
+            }
+        });
+
+        gsap.from('.contact-form', {
+            opacity: 0,
+            y: 20,
+            duration: 0.8,
+            delay: 0.4,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: '.contact-content',
+                start: 'top 85%',
+                toggleActions: 'play none none none'
+            }
         });
     }
 

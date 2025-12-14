@@ -12,7 +12,7 @@
         const noxGroup = document.getElementById('logo-text-nox');
         const verseGroup = document.getElementById('logo-text-verse');
         
-        if (noxGroup) {
+        if (noxGroup && typeof LetterN !== 'undefined') {
             noxGroup.style.cursor = 'pointer';
             noxGroup.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -20,7 +20,7 @@
             });
         }
         
-        if (verseGroup) {
+        if (verseGroup && typeof LetterX !== 'undefined') {
             verseGroup.style.cursor = 'pointer';
             verseGroup.addEventListener('click', (e) => {
                 e.stopPropagation();
@@ -38,17 +38,22 @@
             LogoEntrance.init();
         }
         
-        OrbitAnimation.init();
+        if (typeof OrbitAnimation !== 'undefined') {
+            OrbitAnimation.init();
+        }
+        
         setupLetterClicks();
-        Instructions.init();
-        Starfield.init();
+        
+        if (typeof Instructions !== 'undefined') {
+            Instructions.init();
+        }
+        
+        if (typeof Starfield !== 'undefined') {
+            Starfield.init();
+        }
         
         if (typeof SectionAnimations !== 'undefined') {
             SectionAnimations.init();
-        }
-        
-        if (typeof CosmicAbout !== 'undefined') {
-            CosmicAbout.init();
         }
         
         if (typeof ShootingStarCTA !== 'undefined') {
@@ -61,6 +66,14 @@
         
         if (typeof Constellation !== 'undefined') {
             Constellation.init();
+        }
+        
+        if (typeof StarfallSkills !== 'undefined') {
+            StarfallSkills.init();
+        }
+        
+        if (typeof ContactForm !== 'undefined') {
+            ContactForm.init();
         }
     }
 

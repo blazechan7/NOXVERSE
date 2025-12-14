@@ -1,4 +1,3 @@
-// Shared configuration for animations
 window.ORBIT_CONFIG = {
     centerX: 200,
     centerY: 25,

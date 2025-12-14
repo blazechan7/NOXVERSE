@@ -11,22 +11,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
     <!-- Core files (load first) -->
-    <script src="js/config.js" defer></script>
-    <script src="js/utils.js" defer></script>
-    <!-- Animation modules -->
-    <script src="js/logo-entrance.js" defer></script>
-    <script src="js/orbit-animation.js" defer></script>
-    <script src="js/letter-n.js" defer></script>
-    <script src="js/letter-x.js" defer></script>
-    <script src="js/starfield.js" defer></script>
-    <script src="js/section-animations.js" defer></script>
-    <script src="js/cosmic-about.js" defer></script>
-    <script src="js/shooting-star-cta.js" defer></script>
-    <script src="js/info-tool.js" defer></script>
-    <script src="js/constellation.js" defer></script>
-    <script src="js/instructions.js" defer></script>
+    <script src="js/core/config.js" defer></script>
+    <script src="js/core/utils.js" defer></script>
+    <!-- Logo animations -->
+    <script src="js/logo/logo-entrance.js" defer></script>
+    <script src="js/logo/orbit-animation.js" defer></script>
+    <script src="js/logo/letter-n.js" defer></script>
+    <script src="js/logo/letter-x.js" defer></script>
+    <!-- Section animations -->
+    <script src="js/sections/section-animations.js" defer></script>
+    <script src="js/sections/constellation.js" defer></script>
+    <script src="js/sections/starfall-skills.js" defer></script>
+    <script src="js/sections/contact-form.js" defer></script>
+    <!-- UI Components -->
+    <script src="js/components/starfield.js" defer></script>
+    <script src="js/components/shooting-star-cta.js" defer></script>
+    <script src="js/components/info-tool.js" defer></script>
+    <script src="js/components/instructions.js" defer></script>
     <!-- Initialization (load last) -->
-    <script src="js/main.js" defer></script>
+    <script src="js/core/main.js" defer></script>
 </head>
 <body>
     <div id="starfield" class="starfield"></div>
@@ -124,8 +127,8 @@
             <button class="star-button" id="explore-button">
                 <div class="star-trail"></div>
                 <div class="star-core">
-                    <span class="star-text-primary">Discover Our Universe</span>
-                    <span class="star-text-secondary">See Our Design Work</span>
+                    <span class="star-text-primary">Discover My Universe</span>
+                    <span class="star-text-secondary">Learn About Me</span>
                 </div>
             </button>
         </div>
@@ -133,7 +136,6 @@
     
     <!-- About Section -->
     <section id="about" class="content-section about-section">
-        <div class="cosmic-bg"></div>
         <div class="section-content">
             <h2 class="section-title">About</h2>
             <div class="about-content">
@@ -148,6 +150,16 @@
                 </p>
             </div>
         </div>
+        
+        <div class="shooting-star-cta">
+            <button class="star-button" id="explore-projects-button">
+                <div class="star-trail"></div>
+                <div class="star-core">
+                    <span class="star-text-primary">Explore Our Projects</span>
+                    <span class="star-text-secondary">View My Work</span>
+                </div>
+            </button>
+        </div>
     </section>
     
     <!-- Projects Section -->
@@ -155,9 +167,6 @@
         <div class="section-content">
             <h2 class="section-title">Projects</h2>
             <div class="constellation-container">
-                <svg class="constellation-lines" id="constellation-svg">
-                    <!-- Lines will be drawn here by JavaScript -->
-                </svg>
                 <div class="constellation-node" data-node="0">
                     <div class="node-star"></div>
                     <div class="node-label">Cosmic Brand Identity</div>
@@ -200,34 +209,110 @@
                 </div>
             </div>
         </div>
+        
+        <div class="shooting-star-cta">
+            <button class="star-button" id="discover-skills-button">
+                <div class="star-trail"></div>
+                <div class="star-core">
+                    <span class="star-text-primary">Discover My Skills</span>
+                    <span class="star-text-secondary">See What I Can Do</span>
+                </div>
+            </button>
+        </div>
     </section>
     
     <!-- Skills Section -->
     <section id="skills" class="content-section">
         <div class="section-content">
             <h2 class="section-title">Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-item">
-                    <div class="skill-icon">🎨</div>
-                    <h3 class="skill-name">Visual Design</h3>
-                    <p class="skill-description">Branding, identity, and visual communication</p>
+            <div class="skills-legend">
+                <div class="legend-item" data-skill="Visual Design">
+                    <div class="legend-star legend-purple"></div>
+                    <span class="legend-text">Visual Design</span>
                 </div>
-                <div class="skill-item">
-                    <div class="skill-icon">💻</div>
-                    <h3 class="skill-name">Web Design</h3>
-                    <p class="skill-description">Interactive experiences and responsive design</p>
+                <div class="legend-item" data-skill="Web Design">
+                    <div class="legend-star legend-blue"></div>
+                    <span class="legend-text">Web Design</span>
                 </div>
-                <div class="skill-item">
-                    <div class="skill-icon">✨</div>
-                    <h3 class="skill-name">Animation</h3>
-                    <p class="skill-description">GSAP, motion design, and micro-interactions</p>
+                <div class="legend-item" data-skill="Animation">
+                    <div class="legend-star legend-gold"></div>
+                    <span class="legend-text">Animation</span>
                 </div>
-                <div class="skill-item">
-                    <div class="skill-icon">🔮</div>
-                    <h3 class="skill-name">UI/UX</h3>
-                    <p class="skill-description">User-centered design and prototyping</p>
+                <div class="legend-item" data-skill="UI/UX">
+                    <div class="legend-star legend-green"></div>
+                    <span class="legend-text">UI/UX</span>
                 </div>
             </div>
+            <div class="starfall-container" id="starfall-skills">
+                <svg class="starfall-svg" viewBox="0 -50 1000 700" preserveAspectRatio="xMidYMid meet">
+                    <defs>
+                        <linearGradient id="starfallTrailGradientPurple" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#9b59b6" stop-opacity="0"/>
+                            <stop offset="20%" stop-color="#a569bd" stop-opacity="0.4"/>
+                            <stop offset="40%" stop-color="#bb8fce" stop-opacity="0.7"/>
+                            <stop offset="60%" stop-color="#d2b4de" stop-opacity="0.85"/>
+                            <stop offset="80%" stop-color="#e8daef" stop-opacity="0.95"/>
+                            <stop offset="100%" stop-color="#f4ecf7" stop-opacity="1"/>
+                        </linearGradient>
+                        <linearGradient id="starfallTrailGradientBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#4a90e2" stop-opacity="0"/>
+                            <stop offset="20%" stop-color="#6db3f2" stop-opacity="0.4"/>
+                            <stop offset="40%" stop-color="#a8d8ff" stop-opacity="0.7"/>
+                            <stop offset="60%" stop-color="#d4ebff" stop-opacity="0.85"/>
+                            <stop offset="80%" stop-color="#e8f4ff" stop-opacity="0.95"/>
+                            <stop offset="100%" stop-color="#ffffff" stop-opacity="1"/>
+                        </linearGradient>
+                        <linearGradient id="starfallTrailGradientGold" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#f39c12" stop-opacity="0"/>
+                            <stop offset="20%" stop-color="#f5b041" stop-opacity="0.4"/>
+                            <stop offset="40%" stop-color="#f7c471" stop-opacity="0.7"/>
+                            <stop offset="60%" stop-color="#fad7a0" stop-opacity="0.85"/>
+                            <stop offset="80%" stop-color="#fdebd0" stop-opacity="0.95"/>
+                            <stop offset="100%" stop-color="#fff8e1" stop-opacity="1"/>
+                        </linearGradient>
+                        <linearGradient id="starfallTrailGradientGreen" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#27ae60" stop-opacity="0"/>
+                            <stop offset="20%" stop-color="#2ecc71" stop-opacity="0.5"/>
+                            <stop offset="40%" stop-color="#58d68d" stop-opacity="0.75"/>
+                            <stop offset="60%" stop-color="#82e0aa" stop-opacity="0.9"/>
+                            <stop offset="80%" stop-color="#a9dfbf" stop-opacity="0.95"/>
+                            <stop offset="100%" stop-color="#d5f4e6" stop-opacity="1"/>
+                        </linearGradient>
+                        <filter id="starfallGlow" x="-100%" y="-100%" width="300%" height="300%">
+                            <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                        <filter id="starfallOrbitGlow" x="-100%" y="-100%" width="300%" height="300%">
+                            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                        <filter id="starfallTrailGlow" x="-100%" y="-100%" width="300%" height="300%">
+                            <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                </svg>
+                <div class="skill-info-container"></div>
+            </div>
+        </div>
+        
+        <div class="shooting-star-cta">
+            <button class="star-button" id="contact-me-button">
+                <div class="star-trail"></div>
+                <div class="star-core">
+                    <span class="star-text-primary">Get In Touch</span>
+                    <span class="star-text-secondary">Let's Work Together</span>
+                </div>
+            </button>
         </div>
     </section>
     
@@ -236,12 +321,29 @@
         <div class="section-content">
             <h2 class="section-title">Contact</h2>
             <div class="contact-content">
-                <p class="contact-text">Ready to explore the cosmos of design together?</p>
-                <div class="contact-links">
-                    <a href="mailto:hello@noxverse.com" class="contact-link">Email</a>
-                    <a href="#" class="contact-link">LinkedIn</a>
-                    <a href="#" class="contact-link">Behance</a>
-                </div>
+                <p class="contact-text">Let's build your universe together</p>
+                <p class="contact-subtext">Reach out and let's create something that lasts.</p>
+                <form class="contact-form" id="contact-form" action="https://formsubmit.co/bloozychan@gmail.com" method="POST" novalidate>
+                    <input type="hidden" name="_subject" value="New Contact from NOX:VERSE">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="box">
+                    <input type="hidden" name="_autoresponse" value="Thank you for contacting NOX:VERSE! I'll get back to you soon.">
+                    <input type="hidden" name="_format" value="plain">
+                    <div class="form-group">
+                        <input type="text" name="name" id="contact-name" class="form-input" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" id="contact-email-input" class="form-input" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" id="contact-message" class="form-input form-textarea" placeholder="Your Message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="contact-submit" id="contact-submit">
+                        <span class="submit-text">Send Message</span>
+                        <span class="submit-loader" style="display: none;">Sending...</span>
+                    </button>
+                    <div class="form-message" id="form-message"></div>
+                </form>
             </div>
         </div>
     </section>
@@ -254,26 +356,71 @@
             </span>
         </div>
         <div class="instructions-content">
-            <div class="instruction-item">
-                <div class="instruction-text">
-                    <strong>Click Star</strong>
-                    <small>Orbit animation</small>
+            <!-- Page Navigation -->
+            <div class="instructions-pages">
+                <div class="page-nav">
+                    <button class="page-nav-btn active" data-page="1">1</button>
+                    <button class="page-nav-btn" data-page="2">2</button>
+                    <button class="page-nav-btn" data-page="3">3</button>
+                </div>
+                
+                <!-- Page 1: Logo Animations -->
+                <div class="instruction-page active" data-page="1">
+                    <div class="instruction-item">
+                        <div class="instruction-text">
+                            <strong>Click Star</strong>
+                            <small>Orbit animation</small>
+                        </div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="instruction-text">
+                            <strong>Click O</strong>
+                            <small>Orbit animation</small>
+                        </div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="instruction-text">
+                            <strong>Click X</strong>
+                            <small>Explosion animation</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Page 2: About & Projects -->
+                <div class="instruction-page" data-page="2">
+                    <div class="instruction-item">
+                        <div class="instruction-text">
+                            <strong>About Section</strong>
+                            <small>Click on underlined "modern aesthetics" for more info</small>
+                        </div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="instruction-text">
+                            <strong>Projects</strong>
+                            <small>Hover over project stars to see details</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Page 3: Skills -->
+                <div class="instruction-page" data-page="3">
+                    <div class="instruction-item">
+                        <div class="instruction-text">
+                            <strong>Falling Stars</strong>
+                            <small>Hover over the falling stars to see skill details</small>
+                        </div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="instruction-text">
+                            <strong>Color Legend</strong>
+                            <small>Each skill has a unique color - see legend above</small>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="instruction-item">
-                <div class="instruction-text">
-                    <strong>Click N</strong>
-                    <small>Click for effect</small>
-                </div>
-            </div>
-            <div class="instruction-item">
-                <div class="instruction-text">
-                    <strong>Click X</strong>
-                    <small>Click for effect</small>
-                </div>
-            </div>
+            
             <div class="instruction-footer">
-                <small>Prototype v1.0</small>
+                <small>Prototype v1.2</small>
             </div>
         </div>
     </div>

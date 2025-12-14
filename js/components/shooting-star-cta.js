@@ -1,18 +1,16 @@
-// Shooting Star CTA Button
 (function() {
     'use strict';
 
-    function initShootingStarCTA() {
-        const exploreButton = document.getElementById('explore-button');
-        const aboutSection = document.getElementById('about');
-        const starTrail = exploreButton?.querySelector('.star-trail');
+    function createShootingStarAnimation(button, targetSection) {
+        if (!button || !targetSection) return;
+        
+        const starTrail = button.querySelector('.star-trail');
+        if (!starTrail) return;
 
-        if (!exploreButton || !aboutSection || !starTrail) return;
-
-        exploreButton.addEventListener('click', () => {
+        button.addEventListener('click', () => {
             if (typeof gsap === 'undefined') return;
 
-            const buttonRect = exploreButton.getBoundingClientRect();
+            const buttonRect = button.getBoundingClientRect();
             const startX = buttonRect.left - 100;
             const buttonY = buttonRect.top + (buttonRect.height / 2);
             const endX = window.innerWidth + 200;
@@ -61,13 +59,13 @@
                 duration: 0.3
             }, '-=0.2')
             .call(() => {
-                aboutSection.scrollIntoView({
+                targetSection.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
                 });
             }, null, '-=0.2');
 
-            gsap.to(exploreButton, {
+            gsap.to(button, {
                 scale: 0.95,
                 duration: 0.1,
                 yoyo: true,
@@ -78,7 +76,7 @@
 
         if (typeof gsap !== 'undefined') {
             setTimeout(() => {
-                gsap.to(exploreButton, {
+                gsap.to(button, {
                     y: -5,
                     duration: 2,
                     ease: 'sine.inOut',
@@ -87,6 +85,24 @@
                 });
             }, 2000);
         }
+    }
+
+    function initShootingStarCTA() {
+        const exploreButton = document.getElementById('explore-button');
+        const aboutSection = document.getElementById('about');
+        createShootingStarAnimation(exploreButton, aboutSection);
+
+        const exploreProjectsButton = document.getElementById('explore-projects-button');
+        const projectsSection = document.getElementById('projects');
+        createShootingStarAnimation(exploreProjectsButton, projectsSection);
+
+        const discoverSkillsButton = document.getElementById('discover-skills-button');
+        const skillsSection = document.getElementById('skills');
+        createShootingStarAnimation(discoverSkillsButton, skillsSection);
+
+        const contactMeButton = document.getElementById('contact-me-button');
+        const contactSection = document.getElementById('contact');
+        createShootingStarAnimation(contactMeButton, contactSection);
     }
 
     window.ShootingStarCTA = {

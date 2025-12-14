@@ -1,0 +1,99 @@
+/* Shooting Star CTA Button */
+.shooting-star-cta {
+    position: absolute;
+    bottom: 4rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 2rem;
+    box-sizing: border-box;
+}
+
+#projects .shooting-star-cta,
+#skills .shooting-star-cta {
+    bottom: 10vh;
+}
+
+.star-button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.star-button:hover {
+    transform: translateX(10px);
+}
+
+.star-trail {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(168, 184, 255, 0.3) 30%,
+        rgba(168, 184, 255, 0.6) 60%,
+        rgba(255, 255, 255, 0.9) 100%
+    );
+    position: relative;
+    animation: trailGlow 2s ease-in-out infinite;
+}
+
+.star-trail::before {
+    content: '';
+    position: absolute;
+    right: -8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle, #ffffff 0%, rgba(168, 184, 255, 0.8) 50%, transparent 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(168, 184, 255, 0.6);
+    animation: starPulseButton 1.5s ease-in-out infinite;
+}
+
+.star-core {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+}
+
+.star-text-primary {
+    font-family: 'Copperplate Gothic Light', 'Copperplate', 'Copperplate Gothic', 'Engravers MT', serif;
+    font-size: 1rem;
+    color: var(--color-pale-blue-glow);
+    font-weight: 300;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.9;
+}
+
+.star-text-secondary {
+    font-size: 0.85rem;
+    color: var(--color-moonlight-white);
+    font-weight: 300;
+    opacity: 0.7;
+    letter-spacing: 0.1em;
+}
+
+/* Shooting star animation on hover */
+.star-button:hover .star-trail {
+    width: 80px;
+    animation: trailExtend 0.5s ease forwards;
+}
+
+.star-button:hover .star-trail::before {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 1), 0 0 30px rgba(168, 184, 255, 0.8);
+}
