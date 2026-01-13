@@ -55,6 +55,9 @@ git push
 
 ### When feature is done
 ```bash
+# Test in Live Server first!
+# Make sure everything works
+
 # Switch to main
 git checkout main
 
@@ -99,9 +102,20 @@ git checkout -- filename
 git checkout -b new-feature-name
 ```
 
+## When to Merge
+
+Merge to main when:
+- Feature is complete and working
+- You've tested it in Live Server
+- No errors in browser console
+
+Don't merge:
+- Broken or unfinished code
+- Code you haven't tested
+
 ## Quick Tips
 
 - Always `git pull` before starting work
 - Commit often with clear messages
-- Test before merging to main
+- Test in Live Server before merging
 - Keep main branch clean and working

@@ -55,7 +55,6 @@
             points.push({ x, y, angle, radius, isInner: i % 2 === 1 });
         }
         
-        // Build path with curves only for inner sides (segments connecting to inner points)
         for (let i = 0; i < points.length; i++) {
             const point = points[i];
             const prevPoint = points[(i - 1 + points.length) % points.length];
@@ -63,19 +62,16 @@
             if (i === 0) {
                 starPath += `M ${point.x} ${point.y}`;
             } else if (point.isInner) {
-                // Curving INTO an inner point - create deeper curve from outer point
                 const angleDiff = point.angle - prevPoint.angle;
                 let normalizedDiff = angleDiff;
                 if (normalizedDiff > Math.PI) normalizedDiff -= 2 * Math.PI;
                 if (normalizedDiff < -Math.PI) normalizedDiff += 2 * Math.PI;
                 
-                // Control points create a deeper curve that pulls more toward center
                 const t1 = 0.3;
                 const t2 = 0.7;
                 const angle1 = prevPoint.angle + normalizedDiff * t1;
                 const angle2 = prevPoint.angle + normalizedDiff * t2;
                 
-                // Control points positioned to create deeper inward curve (pull more toward center)
                 const control1Radius = prevPoint.radius * 0.5;
                 const control2Radius = point.radius * 0.95;
                 const control1X = Math.cos(angle1) * control1Radius;
@@ -85,19 +81,16 @@
                 
                 starPath += ` C ${control1X} ${control1Y} ${control2X} ${control2Y} ${point.x} ${point.y}`;
             } else if (prevPoint.isInner) {
-                // Curving OUT OF an inner point - create deeper curve to outer point (sharper edge)
                 const angleDiff = point.angle - prevPoint.angle;
                 let normalizedDiff = angleDiff;
                 if (normalizedDiff > Math.PI) normalizedDiff -= 2 * Math.PI;
                 if (normalizedDiff < -Math.PI) normalizedDiff += 2 * Math.PI;
                 
-                // Control points create a deeper curve that approaches outer point more directly
                 const t1 = 0.15;
                 const t2 = 0.5;
                 const angle1 = prevPoint.angle + normalizedDiff * t1;
                 const angle2 = prevPoint.angle + normalizedDiff * t2;
                 
-                // Control points positioned to create deeper outward curve, approaching outer point sharply
                 const control1Radius = prevPoint.radius * 0.95;
                 const control2Radius = point.radius * 0.5;
                 const control1X = Math.cos(angle1) * control1Radius;
@@ -337,7 +330,6 @@
     window.OrbitAnimation = {
         init() {
             if (typeof gsap === 'undefined') return;
-            // DOM is already ready when called from main.js
             setupStarClick();
         }
     };

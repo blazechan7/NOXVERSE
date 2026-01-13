@@ -131,7 +131,6 @@
         skills.forEach((skill, index) => {
             const group = Utils.createSVGElement('g', { class: 'skill-star-group' });
             
-            // Create trails with skill-specific color
             const trails = [];
             for (let i = 0; i < trailStreaks; i++) {
                 const trail = Utils.createSVGElement('path', {
@@ -154,7 +153,6 @@
                 group.appendChild(trail);
             }
             
-            // Create star with skill-specific color
             const starPath = Utils.createSVGElement('path', {
                 class: 'skill-star-path',
                 d: createStarPath(starSize),
@@ -164,7 +162,6 @@
                 'stroke-linejoin': 'round'
             });
             
-            // Store skill data on group for reference
             group.setAttribute('data-skill-name', skill.name);
             
             group.appendChild(starPath);
@@ -172,13 +169,13 @@
 
             const startX = Math.random() * containerWidth;
             const startY = -30;
-            const endY = containerHeight + 150; // Extend beyond to allow fade
+            const endY = containerHeight + 150;
             const drift = (Math.random() - 0.5) * 150;
             const duration = 4 + Math.random() * 2;
             const delay = index * 0.8;
 
             const positionHistory = [];
-            const maxHistoryPoints = trailLength + 10; // Extra buffer
+            const maxHistoryPoints = trailLength + 10;
 
             gsap.set(group, {
                 x: startX,
@@ -187,25 +184,20 @@
             });
             gsap.set(starPath, { opacity: 1 });
             
-            // Initialize trails with empty path
             trails.forEach(trail => {
                 trail.setAttribute('d', 'M 0,0');
             });
 
-            // Add initial position to history so trails can start immediately
             positionHistory.push({ x: startX, y: startY });
 
-            // Function to update trails
             const updateTrails = function() {
                 const currentX = gsap.getProperty(group, 'x');
                 const currentY = gsap.getProperty(group, 'y');
                 
-                // Skip if position is invalid
                 if (isNaN(currentX) || isNaN(currentY)) {
                     return;
                 }
                 
-                // Calculate fade-out opacity - fade out in last 200px before bottom
                 const fadeStartY = containerHeight - 200;
                 const fadeEndY = containerHeight - 50;
                 let starOpacity = 1;
@@ -215,21 +207,18 @@
                 }
                 
                 gsap.set(starPath, { opacity: starOpacity });
-                
-                // Add current position to history
                 positionHistory.push({ x: currentX, y: currentY });
                 
-                // Keep history within bounds
                 if (positionHistory.length > maxHistoryPoints) {
                     positionHistory.shift();
                 }
                 
-                // Build trail path - need at least 2 points
+                const centerIndex = Math.floor(trailStreaks / 2);
+                
                 if (positionHistory.length >= 2) {
                     const startIdx = Math.max(0, positionHistory.length - trailLength);
                     let pathData = '';
                     
-                    // Build path from history
                     for (let i = startIdx; i < positionHistory.length; i++) {
                         const point = positionHistory[i];
                         const offsetX = point.x - currentX;
@@ -242,11 +231,8 @@
                         }
                     }
                     
-                    // Close path to current position
                     pathData += ` L 0 0`;
                     
-                    // Apply to all trail streaks
-                    const centerIndex = Math.floor(trailStreaks / 2);
                     trails.forEach((trail, trailIndex) => {
                         const offset = (trailIndex - centerIndex) * trailSpacing;
                         const offsetPath = pathData.replace(/(-?\d+\.?\d*)\s+(-?\d+\.?\d*)/g, (match, x, y) => {
@@ -256,8 +242,26 @@
                         });
                         trail.setAttribute('d', offsetPath);
                         
-                        const baseOpacity = 0.8 - (Math.abs(trailIndex - centerIndex) * 0.12);
-                        trail.setAttribute('opacity', baseOpacity * starOpacity);
+                        const trailBaseOpacity = 0.8 - (Math.abs(trailIndex - centerIndex) * 0.12);
+                        trail.setAttribute('opacity', trailBaseOpacity * starOpacity);
+                    });
+                } else if (positionHistory.length === 1) {
+                    const point = positionHistory[0];
+                    const offsetX = point.x - currentX;
+                    const offsetY = point.y - currentY;
+                    const simplePath = `M ${offsetX} ${offsetY} L 0 0`;
+                    
+                    trails.forEach((trail, trailIndex) => {
+                        const offset = (trailIndex - centerIndex) * trailSpacing;
+                        const offsetPath = simplePath.replace(/(-?\d+\.?\d*)\s+(-?\d+\.?\d*)/g, (match, x, y) => {
+                            const newX = parseFloat(x) + offset;
+                            const newY = parseFloat(y);
+                            return `${newX} ${newY}`;
+                        });
+                        trail.setAttribute('d', offsetPath);
+                        
+                        const trailBaseOpacity = 0.8 - (Math.abs(trailIndex - centerIndex) * 0.12);
+                        trail.setAttribute('opacity', trailBaseOpacity * starOpacity);
                     });
                 }
             };
@@ -274,7 +278,6 @@
                     updateTrails();
                 },
                 onRepeat: function() {
-                    // Clear trails and history before reset
                     trails.forEach(trail => {
                         trail.setAttribute('d', 'M 0,0');
                     });
@@ -290,7 +293,6 @@
                     });
                     gsap.set(starPath, { opacity: 1 });
                     
-                    // Add new starting position to history so trails can start immediately
                     positionHistory.push({ x: newX, y: newStartY });
                 }
             });
@@ -316,29 +318,24 @@
                 const starX = rect.left - containerRect.left + rect.width / 2;
                 const starY = rect.top - containerRect.top;
                 
-                // Use estimated dimensions (min-width: 200px, max-width: 250px, typical height ~80px)
                 const infoWidth = 220;
                 const infoHeight = 80;
                 
                 let infoX = starX + 20;
                 let infoY = starY;
                 
-                // Check if info box would overflow on the right
                 if (infoX + infoWidth > containerRect.width - 10) {
-                    infoX = starX - infoWidth - 20; // Position on left side
+                    infoX = starX - infoWidth - 20;
                 }
                 
-                // Check if info box would overflow on the left
                 if (infoX < 10) {
-                    infoX = 10; // Keep it within bounds
+                    infoX = 10;
                 }
                 
-                // Check if info box would overflow on the bottom
                 if (infoY + infoHeight / 2 > containerRect.height - 10) {
                     infoY = containerRect.height - infoHeight / 2 - 10;
                 }
                 
-                // Check if info box would overflow on the top
                 if (infoY - infoHeight / 2 < 10) {
                     infoY = infoHeight / 2 + 10;
                 }
