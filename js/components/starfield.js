@@ -53,7 +53,6 @@
     }
     
     function initStarfield() {
-        // DOM is already ready when called from main.js
         createStarfield();
     }
 
