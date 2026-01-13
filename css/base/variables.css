@@ -1,0 +1,23 @@
+:root {
+    --color-moonlight-white: #f0f4ff;
+    --color-pale-blue-glow: #c8d5f0;
+    --color-lavender-moon: #a8b8e8;
+    --color-deep-night: #2d3a5c;
+    --color-midnight: #0f1520;
+    
+    --color-main-start: var(--color-moonlight-white);
+    --color-main-mid: var(--color-lavender-moon);
+    --color-main-end: var(--color-lavender-moon);
+    
+    --color-star-center: var(--color-moonlight-white);
+    --color-star-mid: var(--color-pale-blue-glow);
+    --color-star-outer: var(--color-lavender-moon);
+    
+    --color-eclipse-inner: var(--color-pale-blue-glow);
+    --color-eclipse-outer: var(--color-lavender-moon);
+    
+    --opacity-star-mid: 0.8;
+    --opacity-star-outer: 0.4;
+    --opacity-eclipse-inner: 0.6;
+    --opacity-eclipse-outer: 0.3;
+}

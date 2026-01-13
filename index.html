@@ -3,57 +3,114 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOX:VERSE - Step 1: Color Selection</title>
+    <title>NOX:VERSE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+    <!-- Core files (load first) -->
+    <script src="js/core/config.js" defer></script>
+    <script src="js/core/utils.js" defer></script>
+    <!-- Logo animations -->
+    <script src="js/logo/logo-entrance.js" defer></script>
+    <script src="js/logo/orbit-animation.js" defer></script>
+    <script src="js/logo/letter-n.js" defer></script>
+    <script src="js/logo/letter-x.js" defer></script>
+    <!-- Section animations -->
+    <script src="js/sections/section-animations.js" defer></script>
+    <script src="js/sections/constellation.js" defer></script>
+    <script src="js/sections/starfall-skills.js" defer></script>
+    <script src="js/sections/contact-form.js" defer></script>
+    <!-- UI Components -->
+    <script src="js/components/starfield.js" defer></script>
+    <script src="js/components/shooting-star-cta.js" defer></script>
+    <script src="js/components/info-tool.js" defer></script>
+    <script src="js/components/instructions.js" defer></script>
+    <!-- Initialization (load last) -->
+    <script src="js/core/main.js" defer></script>
 </head>
 <body>
-    <div class="container">
-        <svg class="logo" viewBox="0 0 69.38 32.02" xmlns="http://www.w3.org/2000/svg">
+    <div id="starfield" class="starfield"></div>
+    
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+        <div class="container">
+            <svg class="logo" viewBox="-350 -425 1100 1000" xmlns="http://www.w3.org/2000/svg">
             <defs>
-                
-                <!-- Main fill gradient - used for text and shapes -->
                 <linearGradient id="mainFill" x1="0%" y1="0%" x2="100%" y2="100%">
                     <stop offset="0%" stop-color="#e8e8f0" stop-opacity="1"/>
                     <stop offset="50%" stop-color="#a8b8ff" stop-opacity="1"/>
                     <stop offset="100%" stop-color="#6b7db8" stop-opacity="1"/>
                 </linearGradient>
                 
-                <!-- Star gradient - center element -->
                 <radialGradient id="starGradient" cx="50%" cy="50%">
                     <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
                     <stop offset="50%" stop-color="#a8b8ff" stop-opacity="0.8"/>
                     <stop offset="100%" stop-color="#4a5a9f" stop-opacity="0.4"/>
                 </radialGradient>
                 
-                <!-- Eclipse ring gradient - the "O" shape -->
                 <radialGradient id="eclipseGradient" cx="50%" cy="50%">
                     <stop offset="0%" stop-color="#a8b8ff" stop-opacity="0.6"/>
                     <stop offset="100%" stop-color="#4a5a9f" stop-opacity="0.3"/>
                 </radialGradient>
+                
+                <filter id="orbitGlow" x="-100%" y="-100%" width="300%" height="300%">
+                    <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                    <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+                
+                <linearGradient id="shootingStarGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#0d1b2a" stop-opacity="0"/>
+                    <stop offset="15%" stop-color="#1e3a5f" stop-opacity="0.3"/>
+                    <stop offset="35%" stop-color="#4a90e2" stop-opacity="0.5"/>
+                    <stop offset="55%" stop-color="#6db3f2" stop-opacity="0.7"/>
+                    <stop offset="75%" stop-color="#a8d8ff" stop-opacity="0.85"/>
+                    <stop offset="90%" stop-color="#d4ebff" stop-opacity="0.95"/>
+                    <stop offset="100%" stop-color="#ffffff" stop-opacity="1"/>
+                </linearGradient>
+                
+                <filter id="stardustGlow" x="-100%" y="-100%" width="300%" height="300%">
+                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                    <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+                
+                <filter id="smokeGlow" x="-300%" y="-300%" width="700%" height="700%">
+                    <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                    <feGaussianBlur stdDeviation="2" in="SourceGraphic" result="softBlur"/>
+                    <feMerge>
+                        <feMergeNode in="coloredBlur" opacity="0.6"/>
+                        <feMergeNode in="softBlur" opacity="0.8"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
             </defs>
             
-            <!-- Main logo wrapper group -->
-            <g id="logo-noxverse">
-                <!-- Eclipse ring (the "O") - combines left and right eclipses -->
+            <g id="orbit-container"></g>
+            
+            <g id="logo-noxverse" transform="translate(200, 25) scale(15.87) translate(-34.69, -16.01)">
                 <g id="logo-ring">
-                    <path class="cls-1" d="M23.99,11.42c0-5.34,3.99-9.74,9.16-10.4-.44-.06-.89-.1-1.34-.1-5.8,0-10.5,4.7-10.5,10.5s4.7,10.5,10.5,10.5c.46,0,.9-.04,1.34-.1-5.16-.66-9.16-5.06-9.16-10.4Z" fill="url(#eclipseGradient)"/>
-                    <path class="cls-1" d="M44.9,11.42c0-5.34-3.99-9.74-9.16-10.4.44-.06.89-.1,1.34-.1,5.8,0,10.5,4.7,10.5,10.5s-4.7,10.5-10.5,10.5c-.46,0-.9-.04-1.34-.1,5.16-.66,9.16-5.06,9.16-10.4Z" fill="url(#eclipseGradient)"/>
+                    <path id="eclipse-left" class="cls-1" d="M23.99,11.42c0-5.34,3.99-9.74,9.16-10.4-.44-.06-.89-.1-1.34-.1-5.8,0-10.5,4.7-10.5,10.5s4.7,10.5,10.5,10.5c.46,0,.9-.04,1.34-.1-5.16-.66-9.16-5.06-9.16-10.4Z" fill="url(#eclipseGradient)"/>
+                    <path id="eclipse-right" class="cls-1" d="M44.9,11.42c0-5.34-3.99-9.74-9.16-10.4.44-.06.89-.1,1.34-.1,5.8,0,10.5,4.7,10.5,10.5s-4.7,10.5-10.5,10.5c-.46,0-.9-.04-1.34-.1,5.16-.66,9.16-5.06,9.16-10.4Z" fill="url(#eclipseGradient)"/>
                 </g>
                 
-                <!-- Star inside the ring -->
                 <path id="logo-star" class="cls-2" d="M34.35,23.94c-1.02-11.59.61-13.43-7.75-14.71,5.98-1.22,6.73-1.9,7.84-8.48,1.11,6.58,1.68,7.25,7.65,8.48-8.32,1.3-6.73,3.12-7.75,14.71Z" fill="url(#starGradient)"/>
                 
-                <!-- NOX text -->
                 <g id="logo-text-nox">
                     <path class="cls-1" d="M.29,4.11h6.57l11.38,11.79v-7.05c0-.86-.15-1.61-.44-2.26s-.72-1.13-1.27-1.47c-.3-.19-.6-.32-.9-.4s-.72-.14-1.26-.18v-.43h8.11v.43h-.16c-1.18,0-2.08.38-2.7,1.12s-.93,1.84-.93,3.27v11.71h-.39L4.18,6.13v9.73c0,.95.11,1.7.34,2.27s.59,1.01,1.1,1.33c.41.25.92.41,1.51.48.33.05.8.09,1.41.12v.43H0v-.43c.88-.05,1.59-.2,2.14-.46s.96-.65,1.22-1.17.39-1.16.39-1.92V7.24c0-.57-.13-1.05-.38-1.45s-.62-.71-1.11-.92-1.07-.32-1.76-.32h-.21v-.43Z"/>
                 </g>
                 
-                <!-- VERSE text -->
                 <g id="logo-text-verse">
                     <path class="cls-1" d="M46.59,4.04h10.68v.43h-.21c-.59,0-1.06.09-1.41.28s-.53.44-.53.76c0,.18.06.4.17.65s.26.5.45.74l3.3,3.82,2.58-2.62c.62-.65.94-1.25.94-1.79s-.23-.99-.69-1.31-1.13-.49-2-.52v-.43h8.79v.43c-1.04.17-1.93.45-2.67.82-1.36.68-2.61,1.6-3.74,2.75l-2.93,3,5.45,6.36c.7.8,1.42,1.43,2.17,1.89s1.45.68,2.1.68h.29v.43h-10.9v-.43h.94c.67,0,1.19-.1,1.56-.29s.55-.46.55-.79c0-.37-.19-.76-.57-1.17l-3.79-4.44-2.7,2.75c-.27.29-.5.55-.67.78s-.29.45-.37.67-.11.44-.11.66c0,.56.23,1.01.7,1.34s1.11.49,1.94.49h.48v.43h-9.79v-.43c.66-.09,1.21-.2,1.65-.33s.95-.34,1.52-.6c1.34-.63,2.61-1.54,3.8-2.71l3.28-3.34-5.43-6.26c-1.28-1.51-2.75-2.26-4.39-2.26h-.42v-.43Z"/>
                 </g>
                 
-                <!-- NOXVERSE text at bottom -->
                 <g id="logo-text-noxverse-bottom">
                     <path class="cls-1" d="M2.85,31.04l1.62-3.61c.05-.1.07-.18.07-.25,0-.14-.09-.22-.27-.25v-.12h1.26v.12c-.13.04-.22.09-.28.16s-.15.24-.26.5l-1.54,3.42c-.07.16-.11.28-.11.36,0,.13.08.21.25.24v.12h-1.56v-.12c.17-.04.25-.12.25-.25,0-.08-.04-.2-.11-.36l-1.59-3.42c-.12-.27-.21-.43-.27-.5s-.15-.12-.28-.15v-.12h1.4v.12c-.18.03-.27.11-.27.24,0,.07.02.16.07.26l1.63,3.61Z"/>
                     <path class="cls-1" d="M17.55,29.44v1.82h3.12c.13,0,.22-.02.27-.06.05-.04.09-.11.12-.22h.13v1.04h-.13c-.03-.11-.07-.19-.12-.22-.05-.04-.14-.06-.27-.06h-4.06v-.12c.12-.03.19-.07.23-.12.04-.05.06-.14.06-.26v-3.93c0-.12-.02-.21-.06-.26s-.12-.09-.23-.12v-.12h4.03c.13,0,.21-.02.27-.06.05-.04.09-.11.12-.22h.12v1.04h-.12c-.03-.11-.07-.19-.12-.22-.05-.04-.14-.06-.27-.06h-3.1v1.66h1.97c.13,0,.22-.02.27-.06.05-.04.09-.11.12-.22h.12v1.04h-.12c-.03-.11-.07-.19-.12-.22-.05-.04-.14-.06-.26-.06h-1.97Z"/>
@@ -63,6 +120,309 @@
                 </g>
             </g>
         </svg>
+        </div>
+        
+        <!-- Shooting Star Button -->
+        <div class="shooting-star-cta">
+            <button class="star-button" id="explore-button">
+                <div class="star-trail"></div>
+                <div class="star-core">
+                    <span class="star-text-primary">Discover My Universe</span>
+                    <span class="star-text-secondary">Learn About Me</span>
+                </div>
+            </button>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about" class="content-section about-section">
+        <div class="section-content">
+            <h2 class="section-title">About</h2>
+            <div class="about-content">
+                <p class="about-text">
+                    Welcome to <span class="cosmic-highlight">NOX:VERSE</span>, a cosmic design studio inspired by digital design and the aesthetics of deep space. We craft immersive experiences that 
+                    blend <span class="info-trigger" data-info="modern-aesthetics">modern aesthetics</span> with cosmic inspiration.
+                </p>
+                <p class="about-text">
+                    As a student designer, I'm passionate about creating interactive experiences 
+                    that tell stories through motion, color, and space. Every project is a journey 
+                    through the <span class="cosmic-highlight">digital cosmos</span>.
+                </p>
+            </div>
+        </div>
+        
+        <div class="shooting-star-cta">
+            <button class="star-button" id="explore-projects-button">
+                <div class="star-trail"></div>
+                <div class="star-core">
+                    <span class="star-text-primary">Explore Our Projects</span>
+                    <span class="star-text-secondary">View My Work</span>
+                </div>
+            </button>
+        </div>
+    </section>
+    
+    <!-- Projects Section -->
+    <section id="projects" class="content-section">
+        <div class="section-content">
+            <h2 class="section-title">Projects</h2>
+            <div class="constellation-container">
+                <div class="constellation-node" data-node="0">
+                    <div class="node-star"></div>
+                    <div class="node-label">Cosmic Brand Identity</div>
+                    <div class="node-info">
+                        <h3 class="node-title">Cosmic Brand Identity</h3>
+                        <p class="node-description">A complete brand identity system inspired by stellar phenomena and cosmic aesthetics.</p>
+                        <div class="node-tags">
+                            <span class="node-tag">Branding</span>
+                            <span class="node-tag">Identity</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="constellation-node" data-node="1">
+                    <div class="node-star"></div>
+                    <div class="node-label">Interactive Web Experience</div>
+                    <div class="node-info">
+                        <h3 class="node-title">Interactive Web Experience</h3>
+                        <p class="node-description">An immersive web experience featuring scroll-triggered animations and cosmic visuals.</p>
+                        <div class="node-tags">
+                            <span class="node-tag">Web Design</span>
+                            <span class="node-tag">Animation</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="constellation-node" data-node="2">
+                    <div class="node-star"></div>
+                    <div class="node-label">Semester 2 Portfolio</div>
+                    <div class="node-info">
+                        <h3 class="node-title">Semester 2 Portfolio</h3>
+                        <p class="node-description">A comprehensive portfolio showcasing all projects from Semester 2, including branding, UX design, development, and interactive media products.</p>
+                        <div class="node-tags">
+                            <span class="node-tag">Portfolio</span>
+                            <span class="node-tag">Web Development</span>
+                            <span class="node-tag">Documentation</span>
+                        </div>
+                        <a href="https://i557567.hera.fontysict.net/" target="_blank" rel="noopener noreferrer" class="node-link">
+                            View Portfolio →
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="shooting-star-cta">
+            <button class="star-button" id="discover-skills-button">
+                <div class="star-trail"></div>
+                <div class="star-core">
+                    <span class="star-text-primary">Discover My Skills</span>
+                    <span class="star-text-secondary">See What I Can Do</span>
+                </div>
+            </button>
+        </div>
+    </section>
+    
+    <!-- Skills Section -->
+    <section id="skills" class="content-section">
+        <div class="section-content">
+            <h2 class="section-title">Skills</h2>
+            <div class="skills-legend">
+                <div class="legend-item" data-skill="Visual Design">
+                    <div class="legend-star legend-purple"></div>
+                    <span class="legend-text">Visual Design</span>
+                </div>
+                <div class="legend-item" data-skill="Web Design">
+                    <div class="legend-star legend-blue"></div>
+                    <span class="legend-text">Web Design</span>
+                </div>
+                <div class="legend-item" data-skill="Animation">
+                    <div class="legend-star legend-gold"></div>
+                    <span class="legend-text">Animation</span>
+                </div>
+                <div class="legend-item" data-skill="UI/UX">
+                    <div class="legend-star legend-green"></div>
+                    <span class="legend-text">UI/UX</span>
+                </div>
+            </div>
+            <div class="starfall-container" id="starfall-skills">
+                <svg class="starfall-svg" viewBox="0 -50 1000 700" preserveAspectRatio="xMidYMid meet">
+                    <defs>
+                        <linearGradient id="starfallTrailGradientPurple" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#9b59b6" stop-opacity="0"/>
+                            <stop offset="20%" stop-color="#a569bd" stop-opacity="0.4"/>
+                            <stop offset="40%" stop-color="#bb8fce" stop-opacity="0.7"/>
+                            <stop offset="60%" stop-color="#d2b4de" stop-opacity="0.85"/>
+                            <stop offset="80%" stop-color="#e8daef" stop-opacity="0.95"/>
+                            <stop offset="100%" stop-color="#f4ecf7" stop-opacity="1"/>
+                        </linearGradient>
+                        <linearGradient id="starfallTrailGradientBlue" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#4a90e2" stop-opacity="0"/>
+                            <stop offset="20%" stop-color="#6db3f2" stop-opacity="0.4"/>
+                            <stop offset="40%" stop-color="#a8d8ff" stop-opacity="0.7"/>
+                            <stop offset="60%" stop-color="#d4ebff" stop-opacity="0.85"/>
+                            <stop offset="80%" stop-color="#e8f4ff" stop-opacity="0.95"/>
+                            <stop offset="100%" stop-color="#ffffff" stop-opacity="1"/>
+                        </linearGradient>
+                        <linearGradient id="starfallTrailGradientGold" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#f39c12" stop-opacity="0"/>
+                            <stop offset="20%" stop-color="#f5b041" stop-opacity="0.4"/>
+                            <stop offset="40%" stop-color="#f7c471" stop-opacity="0.7"/>
+                            <stop offset="60%" stop-color="#fad7a0" stop-opacity="0.85"/>
+                            <stop offset="80%" stop-color="#fdebd0" stop-opacity="0.95"/>
+                            <stop offset="100%" stop-color="#fff8e1" stop-opacity="1"/>
+                        </linearGradient>
+                        <linearGradient id="starfallTrailGradientGreen" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#27ae60" stop-opacity="0"/>
+                            <stop offset="20%" stop-color="#2ecc71" stop-opacity="0.5"/>
+                            <stop offset="40%" stop-color="#58d68d" stop-opacity="0.75"/>
+                            <stop offset="60%" stop-color="#82e0aa" stop-opacity="0.9"/>
+                            <stop offset="80%" stop-color="#a9dfbf" stop-opacity="0.95"/>
+                            <stop offset="100%" stop-color="#d5f4e6" stop-opacity="1"/>
+                        </linearGradient>
+                        <filter id="starfallGlow" x="-100%" y="-100%" width="300%" height="300%">
+                            <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                        <filter id="starfallOrbitGlow" x="-100%" y="-100%" width="300%" height="300%">
+                            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                        <filter id="starfallTrailGlow" x="-100%" y="-100%" width="300%" height="300%">
+                            <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
+                    </defs>
+                </svg>
+                <div class="skill-info-container"></div>
+            </div>
+        </div>
+        
+        <div class="shooting-star-cta">
+            <button class="star-button" id="contact-me-button">
+                <div class="star-trail"></div>
+                <div class="star-core">
+                    <span class="star-text-primary">Get In Touch</span>
+                    <span class="star-text-secondary">Let's Work Together</span>
+                </div>
+            </button>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="content-section">
+        <div class="section-content">
+            <h2 class="section-title">Contact</h2>
+            <div class="contact-content">
+                <p class="contact-text">Let's build your universe together</p>
+                <p class="contact-subtext">Reach out and let's create something that lasts.</p>
+                <form class="contact-form" id="contact-form" action="https://formsubmit.co/bloozychan@gmail.com" method="POST" novalidate>
+                    <input type="hidden" name="_subject" value="New Contact from NOX:VERSE">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_template" value="box">
+                    <input type="hidden" name="_autoresponse" value="Thank you for contacting NOX:VERSE! I'll get back to you soon.">
+                    <input type="hidden" name="_format" value="plain">
+                    <div class="form-group">
+                        <input type="text" name="name" id="contact-name" class="form-input" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" id="contact-email-input" class="form-input" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" id="contact-message" class="form-input form-textarea" placeholder="Your Message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="contact-submit" id="contact-submit">
+                        <span class="submit-text">Send Message</span>
+                        <span class="submit-loader" style="display: none;">Sending...</span>
+                    </button>
+                    <div class="form-message" id="form-message"></div>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <div id="instructions" class="instructions-panel">
+        <div class="instructions-header">
+            <span class="instructions-title">Need help?</span>
+            <span class="instructions-toggle">
+                <span class="toggle-icon">▼</span>
+            </span>
+        </div>
+        <div class="instructions-content">
+            <!-- Page Navigation -->
+            <div class="instructions-pages">
+                <div class="page-nav">
+                    <button class="page-nav-btn active" data-page="1">1</button>
+                    <button class="page-nav-btn" data-page="2">2</button>
+                    <button class="page-nav-btn" data-page="3">3</button>
+                </div>
+                
+                <!-- Page 1: Logo Animations -->
+                <div class="instruction-page active" data-page="1">
+                    <div class="instruction-item">
+                        <div class="instruction-text">
+                            <strong>Click Star</strong>
+                            <small>Orbit animation</small>
+                        </div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="instruction-text">
+                            <strong>Click O</strong>
+                            <small>Orbit animation</small>
+                        </div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="instruction-text">
+                            <strong>Click X</strong>
+                            <small>Explosion animation</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Page 2: About & Projects -->
+                <div class="instruction-page" data-page="2">
+                    <div class="instruction-item">
+                        <div class="instruction-text">
+                            <strong>About Section</strong>
+                            <small>Click on underlined "modern aesthetics" for more info</small>
+                        </div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="instruction-text">
+                            <strong>Projects</strong>
+                            <small>Hover over project stars to see details</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Page 3: Skills -->
+                <div class="instruction-page" data-page="3">
+                    <div class="instruction-item">
+                        <div class="instruction-text">
+                            <strong>Falling Stars</strong>
+                            <small>Hover over the falling stars to see skill details</small>
+                        </div>
+                    </div>
+                    <div class="instruction-item">
+                        <div class="instruction-text">
+                            <strong>Color Legend</strong>
+                            <small>Each skill has a unique color - see legend above</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="instruction-footer">
+                <small>Prototype v1.2</small>
+            </div>
+        </div>
     </div>
 </body>
 </html>

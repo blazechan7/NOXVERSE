@@ -1,0 +1,168 @@
+.instructions-panel {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(15, 21, 32, 0.95);
+    border: 1px solid rgba(168, 184, 232, 0.3);
+    border-radius: 12px;
+    padding: 0;
+    min-width: 240px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.instructions-panel.collapsed .instructions-content {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    padding: 0 16px;
+}
+
+.instructions-panel.collapsed .toggle-icon {
+    transform: rotate(-90deg);
+}
+
+.instructions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.instructions-title {
+    color: var(--color-moonlight-white);
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.instructions-toggle {
+    background: none;
+    border: none;
+    color: var(--color-pale-blue-glow);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.toggle-icon {
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.instructions-content {
+    max-height: 400px;
+    opacity: 1;
+    transition: all 0.3s ease;
+    padding: 0 16px 16px 16px;
+}
+
+.instructions-pages {
+    position: relative;
+    min-height: 200px;
+}
+
+.page-nav {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(168, 184, 232, 0.1);
+}
+
+.page-nav-btn {
+    background: rgba(168, 184, 232, 0.1);
+    border: 1px solid rgba(168, 184, 232, 0.2);
+    border-radius: 6px;
+    color: var(--color-pale-blue-glow);
+    cursor: pointer;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    min-width: 32px;
+}
+
+.page-nav-btn:hover {
+    background: rgba(168, 184, 232, 0.2);
+    border-color: rgba(168, 184, 232, 0.4);
+    transform: translateY(-1px);
+}
+
+.page-nav-btn.active {
+    background: rgba(168, 184, 232, 0.3);
+    border-color: rgba(168, 184, 232, 0.5);
+    color: var(--color-moonlight-white);
+    box-shadow: 0 2px 8px rgba(168, 184, 232, 0.2);
+}
+
+.instruction-page {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.instruction-page.active {
+    display: block;
+    opacity: 1;
+    animation: fadeInPage 0.3s ease;
+}
+
+.instruction-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    margin-bottom: 8px;
+    background: rgba(168, 184, 232, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(168, 184, 232, 0.1);
+    transition: all 0.2s ease;
+}
+
+.instruction-item:hover {
+    background: rgba(168, 184, 232, 0.1);
+    border-color: rgba(168, 184, 232, 0.3);
+    transform: translateX(-2px);
+}
+
+.instruction-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.instruction-text strong {
+    color: var(--color-moonlight-white);
+    font-size: 14px;
+}
+
+.instruction-text small {
+    color: var(--color-pale-blue-glow);
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+.instruction-footer {
+    text-align: center;
+    padding-top: 12px;
+    margin-top: 8px;
+    border-top: 1px solid rgba(168, 184, 232, 0.1);
+}
+
+.instruction-footer small {
+    color: var(--color-pale-blue-glow);
+    opacity: 0.6;
+    font-size: 11px;
+}
+
+.instructions-panel.first-visit {
+    animation: pulse-glow 2s ease-in-out 3;
+}

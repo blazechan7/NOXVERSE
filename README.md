@@ -1,52 +1,56 @@
-# NOX:VERSE Interactive Logo - Step by Step
+# NOX:VERSE Interactive Logo
 
-This project builds an interactive logo step by step for learning purposes.
+An interactive cosmic-themed logo website with animations and user interactions.
 
-## Current Step: Step 1 - Color Selection
+## What It Does
 
-The logo is currently displayed with a basic color palette. No animations or interactions yet.
+- **Logo Animations** - Logo appears with cosmic effects on page load
+- **Interactive Elements** - Click the star, "NOX", or "VERSE" for animations
+- **Starfield Background** - Animated twinkling stars
+- **Project Showcase** - Interactive constellation map of projects
+- **Skills Display** - Falling stars showing different skills
+- **Contact Form** - Working contact form
 
-### SVG Structure
+## Project Structure
 
-The logo is organized with these IDs:
-- `#logo-noxverse` - Main wrapper group
-- `#logo-ring` - The eclipse ring (the "O")
-- `#logo-star` - The star inside the ring
-- `#logo-text-nox` - The word "NOX"
-- `#logo-text-verse` - The word "VERSE"
+```
+js/
+  core/          - Main setup and utilities
+  logo/          - Logo animations
+  sections/      - Page sections (about, projects, skills, contact)
+  components/    - Reusable components (starfield, buttons, etc.)
 
-### Color Customization
+css/
+  base/         - Colors, fonts, reset styles
+  layout/       - Page layout styles
+  components/   - Component styles
+  sections/     - Section-specific styles
+  animations/   - Animation keyframes
+  responsive/   - Mobile styles
+```
 
-To change colors, edit the `:root` section in `styles.css`:
+## Technologies
 
-1. **`--color-main-start/mid/end`** - Main color for text and shapes
-2. **`--color-star-center/mid/outer`** - Star center element gradient
-3. **`--color-eclipse-inner/outer`** - Eclipse ring gradient
+- **GSAP** - Animation library
+- **Vanilla JavaScript** - No frameworks
+- **SVG** - Vector graphics
+- **CSS** - Modular stylesheets
 
-### Color Palette Ideas
+## Getting Started
 
-- **Cosmic** (current): Soft blues, purples, whites
-- **Monochrome**: Grays, whites, blacks
-- **Warm**: Oranges, yellows, reds
-- **Cool**: Blues, cyans, teals
-- **Neon**: Bright, saturated colors
+1. Open `index.html` in a web browser
+2. That's it! No build process needed.
 
-## Next Steps
+## Customization
 
-After deciding on colors:
-- Step 2: Add initial entrance animation
-- Step 3: Add idle state animations
-- Step 4: Add mouse interaction
-- Step 5: Add camera tracking (optional)
+### Colors
+Edit `css/base/variables.css` to change the color scheme.
+
+### Content
+- Edit `index.html` for page content
+- Edit JavaScript files in `js/` for functionality
+- Edit CSS files in `css/` for styling
 
 ## Git Workflow
 
-This project uses a 3-branch workflow:
-- **`design`** - Color experiments and visual tweaks
-- **`develop`** - Feature development (animations, interactions)
-- **`main`** - Stable, completed steps
-
-See `GIT_WORKFLOW.md` for detailed instructions on using Git branches.
-
-
-
+See `GIT_WORKFLOW.md` for how to use Git branches.

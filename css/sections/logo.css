@@ -1,0 +1,73 @@
+/* Logo Styles */
+.orbit-particle-group {
+    pointer-events: none;
+    will-change: transform;
+}
+
+.orbit-particle {
+    pointer-events: none;
+    will-change: opacity;
+}
+
+.orbit-trail {
+    pointer-events: none;
+    will-change: x2, y2, opacity;
+    paint-order: stroke fill markers;
+    stroke-dasharray: none;
+}
+
+.cls-1,
+.cls-2 {
+    fill: url(#mainFill);
+}
+
+.cls-2 {
+    stroke: url(#mainFill);
+    stroke-miterlimit: 10;
+    stroke-width: 0.25px;
+}
+
+#logo-star {
+    cursor: pointer;
+}
+
+#logo-star:hover {
+    opacity: 0.9;
+    transition: opacity 0.2s ease;
+}
+
+#mainFill stop:nth-of-type(1) {
+    stop-color: var(--color-main-start);
+}
+
+#mainFill stop:nth-of-type(2) {
+    stop-color: var(--color-main-mid);
+}
+
+#mainFill stop:nth-of-type(3) {
+    stop-color: var(--color-main-end);
+}
+
+#starGradient stop:nth-of-type(1) {
+    stop-color: var(--color-star-center);
+}
+
+#starGradient stop:nth-of-type(2) {
+    stop-color: var(--color-star-mid);
+    stop-opacity: var(--opacity-star-mid);
+}
+
+#starGradient stop:nth-of-type(3) {
+    stop-color: var(--color-star-outer);
+    stop-opacity: var(--opacity-star-outer);
+}
+
+#eclipseGradient stop:nth-of-type(1) {
+    stop-color: var(--color-eclipse-inner);
+    stop-opacity: var(--opacity-eclipse-inner);
+}
+
+#eclipseGradient stop:nth-of-type(2) {
+    stop-color: var(--color-eclipse-outer);
+    stop-opacity: var(--opacity-eclipse-outer);
+}

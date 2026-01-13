@@ -1,0 +1,22 @@
+/* About Section */
+.about-section {
+    position: relative;
+    overflow: hidden;
+}
+
+.about-content {
+    display: grid;
+    gap: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.about-text {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: var(--color-moonlight-white);
+    opacity: 0.9;
+    text-align: center;
+}
